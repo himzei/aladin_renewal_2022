@@ -1,8 +1,6 @@
 {
   "name": "aladin_renewal_2022",
   "version": "0.1.0",
-  "proxy": "http://www.aladin.co.kr/ttb/api/ItemList.aspx",
-  "homepage": "http://localhost:3000",
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^2.3.5",
@@ -48,6 +46,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:3000"
+  }
+  
 }
