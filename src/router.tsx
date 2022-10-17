@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import Root from "./components/Root";
 import BookDetail from "./routes/BookDetail";
 import Dvd from "./routes/Dvd";
@@ -8,6 +9,7 @@ import InBound from "./routes/InBound";
 import Music from "./routes/Music";
 import NotFound from "./routes/NotFound";
 import OutBound from "./routes/OutBound";
+import Search from "./routes/Search";
 import Used from "./routes/Used";
 
 const router = createBrowserRouter([
@@ -45,8 +47,12 @@ const router = createBrowserRouter([
         element: <Used />,
       },
       {
-        path: "ebook",
+        path: "/ebook",
         element: <Ebook />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
       },
     ],
   },

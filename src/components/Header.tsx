@@ -1,9 +1,30 @@
-import { HStack, Image, Stack, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  IconButton,
+  Image,
+  Stack,
+  Text,
+  useColorMode,
+  useColorModeValue,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
+import { BsFillMoonFill } from "react-icons/bs";
+import { FaSignInAlt } from "react-icons/fa";
+import { MdOutlineRememberMe } from "react-icons/md";
+import { BsFillSunFill } from "react-icons/bs";
 
 export default function Header() {
+  const { colorMode, toggleColorMode } = useColorMode();
+  const headerColor = useColorModeValue("gray.100", "gray.700");
+  const logoColor = useColorModeValue(
+    "../../images/aladinlogo_kor.png",
+    "../../images/aladinlogo_kor_night.png"
+  );
   const {
     onOpen: onLoginOpen,
     isOpen: isLoginOpen,
@@ -14,6 +35,7 @@ export default function Header() {
     isOpen: isSignUpOpen,
     onClose: onSignUPClose,
   } = useDisclosure();
+
   return (
     <Stack
       w="100%"
@@ -23,46 +45,82 @@ export default function Header() {
       fontSize={"sm"}
       alignItems={"center"}
       justifyContent={"center"}
-      backgroundColor={"#33AFDF"}
+      backgroundColor={headerColor}
+      boxShadow="sm"
     >
       <HStack w="7xl" justifyContent={"space-between"}>
         <HStack spacing={6}>
           <Link to="/">
-            <Image
-              src="../../images/aladinlogo.png"
-              alt=""
-              w={20}
-              transform={"translateY"}
-            />
+            <Box mb={2}>
+              <Image src={logoColor} alt="" w={32} />
+            </Box>
           </Link>
           <HStack spacing={6}>
             <Link to="/inbound">
-              <Text>국내도서</Text>
+              <Button colorScheme="blue" variant="link">
+                <Text>국내도서</Text>
+              </Button>
             </Link>
             <Link to="/outbound">
-              <Text>외국도서</Text>
+              <Button colorScheme="blue" variant="link">
+                <Text>외국도서</Text>
+              </Button>
             </Link>
             <Link to="/music">
-              <Text>음반</Text>
+              <Button colorScheme="blue" variant="link">
+                <Text>음반</Text>
+              </Button>
             </Link>
             <Link to="/dvd">
-              <Text>DVD</Text>
+              <Button colorScheme="blue" variant="link">
+                <Text>DVD</Text>
+              </Button>
             </Link>
             <Link to="/used">
-              <Text>중고샵</Text>
+              <Button colorScheme="blue" variant="link">
+                <Text>중고샵</Text>
+              </Button>
             </Link>
+
             <Link to="/ebook">
-              <Text>전자책</Text>
+              <Button colorScheme="blue" variant="link">
+                <Text>전자책</Text>
+              </Button>
             </Link>
           </HStack>
         </HStack>
-        <HStack spacing={6}>
-          <Text as="button" onClick={onLoginOpen}>
-            로그인
-          </Text>
-          <Text as="button" onClick={onSignUpOpen}>
+        <HStack spacing={1}>
+          <IconButton
+            onClick={toggleColorMode}
+            variant="ghost"
+            aria-label="Toggle dark mode"
+            icon={
+              colorMode === "light" ? <BsFillSunFill /> : <BsFillMoonFill />
+            }
+          />
+
+          <Button
+            leftIcon={<MdOutlineRememberMe />}
+            colorScheme="blue"
+            variant="solid"
+            onClick={onSignUpOpen}
+            fontSize="xs"
+            height={7}
+            width={24}
+          >
             회원가입
-          </Text>
+          </Button>
+          <Button
+            leftIcon={<FaSignInAlt />}
+            colorScheme="blue"
+            variant="outline"
+            onClick={onLoginOpen}
+            fontSize="xs"
+            height={7}
+            width={24}
+          >
+            로그인
+          </Button>
         </HStack>
         <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
         <SignUpModal isOpen={isSignUpOpen} onClose={onSignUPClose} />

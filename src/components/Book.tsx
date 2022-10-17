@@ -1,6 +1,8 @@
 import { Badge, Box, GridItem, Image, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { AiFillStar } from "react-icons/ai";
+import { FaHeart } from "react-icons/fa";
+import { dateFormat } from "../lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface IBookProp {
   cover: string;
@@ -9,6 +11,8 @@ interface IBookProp {
   pubDate: string;
   publisher: string;
   isbn: string;
+  fontColor?: string;
+  rankNum?: number;
 }
 
 export default function Book({
@@ -17,6 +21,8 @@ export default function Book({
   pubDate,
   publisher,
   isbn,
+  fontColor,
+  rankNum,
 }: IBookProp) {
   return (
     <>
@@ -31,6 +37,13 @@ export default function Book({
                 h="100%"
               />
             </Box>
+            {rankNum && (
+              <Box position="absolute" left={10} top={0}>
+                <Text fontFamily={"serif"} fontSize="40px">
+                  {rankNum + 1}
+                </Text>
+              </Box>
+            )}
             <Badge
               colorScheme={"yellow.500"}
               px={4}
@@ -39,16 +52,16 @@ export default function Book({
               right={0}
               top={0}
             >
-              <AiFillStar color="crimson" fontSize={18} />
+              <FaHeart color="crimson" fontSize={18} />
             </Badge>
-            <VStack alignItems={"flex-start"} spacing={0}>
-              <Text color={"gray.700"} fontSize={"md"} fontWeight={"bold"}>
+            <VStack alignItems={"flex-start"} spacing={0} w="full">
+              <Text color={fontColor} fontSize={"md"} fontWeight={"bold"}>
                 {title.substr(0, 12)}
               </Text>
-              <Text color={"gray.600"} fontSize={"sm"}>
-                출판일: {pubDate}
+              <Text letterSpacing={"-1px"} color={fontColor} fontSize={"xs"}>
+                {dateFormat(pubDate)}
               </Text>
-              <Text color={"gray.600"} fontSize={"sm"}>
+              <Text color={fontColor} fontSize={"sm"}>
                 {publisher}
               </Text>
             </VStack>

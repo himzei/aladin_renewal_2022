@@ -6,66 +6,127 @@
 // BlogBest : 블로거 베스트셀러 (국내도서만 조회 가능
 
 import { QueryFunctionContext } from "@tanstack/react-query";
+import { ILogInForm } from "./components/LoginModal";
+import { ISignUpForm } from "./components/SignUpModal";
 
-const BASE_PATH = "http://localhost:4000/api/v1";
+const BASE_PATH = "http://localhost:4000";
 
 export async function bestSeller() {
-  return await fetch(`${BASE_PATH}/bestseller`).then((response) =>
+  return await fetch(`${BASE_PATH}/api/v1/bestseller`).then((response) =>
     response.json()
+  );
+}
+export async function bestSellerMonth() {
+  return await fetch(`${BASE_PATH}/api/v1/bestsellerlastmonth`).then(
+    (response) => response.json()
+  );
+}
+
+export async function bestSellerYear() {
+  return await fetch(`${BASE_PATH}/api/v1/bestsellerlastyear`).then(
+    (response) => response.json()
   );
 }
 
 export async function itemNewAll() {
-  return await fetch(`${BASE_PATH}/itemNewAll`).then((response) =>
+  return await fetch(`${BASE_PATH}/api/v1/itemNewAll`).then((response) =>
     response.json()
   );
 }
 
 export async function itemNewSpecial() {
-  return await fetch(`${BASE_PATH}/itemNewSpecial`).then((response) =>
+  return await fetch(`${BASE_PATH}/api/v1/itemNewSpecial`).then((response) =>
     response.json()
   );
 }
 
 export async function itemEditorChoice() {
-  return await fetch(`${BASE_PATH}/itemEditorChoice`).then((response) =>
+  return await fetch(`${BASE_PATH}/api/v1/itemEditorChoice`).then((response) =>
     response.json()
   );
 }
 
 export async function blogBest() {
-  return await fetch(`${BASE_PATH}/blogBest`).then((response) =>
+  return await fetch(`${BASE_PATH}/api/v1/blogBest`).then((response) =>
     response.json()
   );
 }
 
 export async function bookDetail(ctx: QueryFunctionContext) {
   const isbn = ctx.queryKey[1];
-  return await fetch(`${BASE_PATH}/book/${isbn}`).then((response) =>
+  return await fetch(`${BASE_PATH}/api/v1/book/${isbn}`).then((response) =>
     response.json()
   );
 }
 
 export async function inBound() {
-  return await fetch(`${BASE_PATH}/inbound`).then((response) =>
+  return await fetch(`${BASE_PATH}/api/v1/inbound`).then((response) =>
     response.json()
   );
 }
 
 export async function outBound() {
-  return await fetch(`${BASE_PATH}/outbound`).then((response) =>
+  return await fetch(`${BASE_PATH}/api/v1/outbound`).then((response) =>
     response.json()
   );
 }
 export async function music() {
-  return await fetch(`${BASE_PATH}/music`).then((response) => response.json());
+  return await fetch(`${BASE_PATH}/api/v1/music`).then((response) =>
+    response.json()
+  );
 }
 export async function dvd() {
-  return await fetch(`${BASE_PATH}/dvd`).then((response) => response.json());
+  return await fetch(`${BASE_PATH}/api/v1/dvd`).then((response) =>
+    response.json()
+  );
 }
 export async function used() {
-  return await fetch(`${BASE_PATH}/used`).then((response) => response.json());
+  return await fetch(`${BASE_PATH}/api/v1/used`).then((response) =>
+    response.json()
+  );
 }
 export async function eBook() {
-  return await fetch(`${BASE_PATH}/eBook`).then((response) => response.json());
+  return await fetch(`${BASE_PATH}/api/v1/eBook`).then((response) =>
+    response.json()
+  );
+}
+
+export async function Search(term: string) {
+  return await fetch(`${BASE_PATH}/api/v1/search/${term}`).then((response) =>
+    response.json()
+  );
+}
+
+export async function usernameSignUp({
+  username,
+  email,
+  password,
+  password2,
+}: ISignUpForm) {
+  console.log(username, email, password, password2);
+  return await fetch(`${BASE_PATH}/users/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username,
+      email,
+      password,
+      password2,
+    }),
+  }).then((response) => response.json);
+}
+
+export async function usernameLogIn({ username, password }: ILogInForm) {
+  return await fetch(`${BASE_PATH}/users/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+  }).then((response) => response.json);
 }

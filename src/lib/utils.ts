@@ -19,3 +19,9 @@ export function dateFormat(date: string) {
   const after = `${before[0]}년 ${before[1]}월 ${before[2]}일`;
   return after;
 }
+
+let db = 0;
+export function reviewPlus(rank: number) {
+  db = rank + db;
+  return db;
+}

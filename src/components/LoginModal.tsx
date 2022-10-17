@@ -15,27 +15,40 @@ import {
 } from "@chakra-ui/react";
 import { FaUser, FaLock } from "react-icons/fa";
 import SocialLogin from "./SocialLogin";
+import { useMutation } from "@tanstack/react-query";
+import { usernameLogIn } from "../api";
 
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-interface IForm {
+export interface ILogInForm {
   username: string;
   password: string;
 }
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const {
+    reset,
     register,
+    handleSubmit,
     formState: { errors },
-  } = useForm<IForm>();
+  } = useForm<ILogInForm>();
+  const mutation = useMutation(usernameLogIn, {
+    onSuccess: () => {
+      onClose();
+      reset();
+    },
+  });
+  const onSubmit = ({ username, password }: ILogInForm) => {
+    mutation.mutate({ username, password });
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>로그인</ModalHeader>
         <ModalCloseButton />
-        <ModalBody as="form">
+        <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
           <VStack>
             <InputGroup>
               <InputLeftElement
