@@ -1,10 +1,7 @@
 import {
-  Badge,
   Box,
   Grid,
-  GridItem,
   Heading,
-  Image,
   Tab,
   TabList,
   TabPanel,
@@ -15,7 +12,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { AnimatePresence } from "framer-motion";
 import {
   bestSeller,
   bestSellerMonth,
@@ -27,9 +23,6 @@ import {
 import Book from "../components/Book";
 import BookSkeleton from "../components/BookSkeleton";
 import SearchForm from "../components/SearchForm";
-import { Link } from "react-router-dom";
-import { FaHeart } from "react-icons/fa";
-import { dateFormat } from "../lib/utils";
 
 export interface IBookResult {
   author: string;
@@ -82,7 +75,13 @@ export default function Home() {
       <VStack
         position={"relative"}
         h="300px"
-        minWidth={"1300px"}
+        minWidth={{
+          sm: "500px",
+          md: "700px",
+          lg: "900px",
+          xl: "1100px",
+          "2xl": "1300px",
+        }}
         justifyContent="center"
         color="white"
         backgroundImage={
@@ -108,10 +107,25 @@ export default function Home() {
           spacing={8}
         >
           <VStack alignItems={"flex-start"}>
-            <Heading fontSize={40} fontWeight={700}>
+            <Heading
+              fontSize={{
+                sm: 20,
+                lg: 30,
+                "2xl": 40,
+              }}
+              fontWeight={700}
+            >
               검색해보세요! 요술램프의 마법을 보여드립니다!!
             </Heading>
-            <Text fontSize={24} fontWeight={600} mb={10}>
+            <Text
+              fontSize={{
+                sm: 16,
+                lg: 20,
+                "2xl": 24,
+              }}
+              fontWeight={600}
+              mb={10}
+            >
               Millions of books, DVD shows and music to discover. Explore now.
             </Text>
           </VStack>
@@ -133,75 +147,43 @@ export default function Home() {
             <TabPanels>
               <TabPanel>
                 <Grid
-                  templateColumns="repeat(7, 1fr)"
+                  height="300px"
+                  overflow={"hidden"}
+                  templateColumns={{
+                    sm: "repeat(2, 1fr)",
+                    md: "repeat(4, 1fr)",
+                    lg: "repeat(5, 1fr)",
+                    xl: "repeat(6, 1fr)",
+                    "2xl": "repeat(7, 1fr)",
+                  }}
                   gap={4}
                   gridAutoFlow="row dense"
                 >
-                  <AnimatePresence>
-                    {isLoadingBestSeller ? <BookSkeleton /> : null}
-                    {dataBestSeller?.map((data, index) => (
-                      <Link to={`/book/${data.isbn}`} key={index}>
-                        <GridItem>
-                          <Box>
-                            <VStack position="relative">
-                              <Box
-                                w={"150px"}
-                                h="230px"
-                                overflow={"hidden"}
-                                rounded={"20px"}
-                              >
-                                <Image
-                                  src={data.cover}
-                                  objectFit="cover"
-                                  objectPosition={"center center"}
-                                  h="100%"
-                                />
-                              </Box>
-
-                              <Badge
-                                colorScheme={"yellow.500"}
-                                px={4}
-                                py={1}
-                                position="absolute"
-                                right={0}
-                                top={0}
-                              >
-                                <FaHeart color="crimson" fontSize={18} />
-                              </Badge>
-                              <VStack
-                                alignItems={"flex-start"}
-                                spacing={0}
-                                w="full"
-                              >
-                                <Text
-                                  color={textColor}
-                                  fontSize={"md"}
-                                  fontWeight={"bold"}
-                                >
-                                  {data.title.substr(0, 12)}
-                                </Text>
-                                <Text
-                                  letterSpacing={"-1px"}
-                                  color={textColor}
-                                  fontSize={"xs"}
-                                >
-                                  {dateFormat(data.pubDate)}
-                                </Text>
-                                <Text color={textColor} fontSize={"sm"}>
-                                  {data.publisher}
-                                </Text>
-                              </VStack>
-                            </VStack>
-                          </Box>
-                        </GridItem>
-                      </Link>
-                    ))}
-                  </AnimatePresence>
+                  {isLoadingBestSeller ? <BookSkeleton /> : null}
+                  {dataBestSeller?.map((data, index) => (
+                    <Book
+                      key={index}
+                      cover={data.cover}
+                      title={data.title}
+                      priceSales={data.priceSales}
+                      pubDate={data.pubDate}
+                      publisher={data.publisher}
+                      isbn={data.isbn}
+                    />
+                  ))}
                 </Grid>
               </TabPanel>
               <TabPanel>
                 <Grid
-                  templateColumns="repeat(7, 1fr)"
+                  height="300px"
+                  overflow={"hidden"}
+                  templateColumns={{
+                    sm: "repeat(2, 1fr)",
+                    md: "repeat(4, 1fr)",
+                    lg: "repeat(5, 1fr)",
+                    xl: "repeat(6, 1fr)",
+                    "2xl": "repeat(7, 1fr)",
+                  }}
                   gap={4}
                   gridAutoFlow="row dense"
                 >
@@ -221,7 +203,15 @@ export default function Home() {
               </TabPanel>
               <TabPanel>
                 <Grid
-                  templateColumns="repeat(7, 1fr)"
+                  height="300px"
+                  overflow={"hidden"}
+                  templateColumns={{
+                    sm: "repeat(2, 1fr)",
+                    md: "repeat(4, 1fr)",
+                    lg: "repeat(5, 1fr)",
+                    xl: "repeat(6, 1fr)",
+                    "2xl": "repeat(7, 1fr)",
+                  }}
                   gap={4}
                   gridAutoFlow="row dense"
                 >
@@ -248,7 +238,18 @@ export default function Home() {
             블로거 베스트셀러
           </Text>
 
-          <Grid templateColumns="repeat(7, 1fr)" gap={4}>
+          <Grid
+            height="300px"
+            overflow={"hidden"}
+            templateColumns={{
+              sm: "repeat(2, 1fr)",
+              md: "repeat(4, 1fr)",
+              lg: "repeat(5, 1fr)",
+              xl: "repeat(6, 1fr)",
+              "2xl": "repeat(7, 1fr)",
+            }}
+            gap={4}
+          >
             {isLoadingBlogBest ? <BookSkeleton /> : null}
             {dataBlogBest?.map((data, index) => (
               <Book
@@ -266,18 +267,37 @@ export default function Home() {
         </VStack>
 
         <Box
-          w="7xl"
+          w={{
+            sm: "md",
+            md: "3xl",
+            lg: "4xl",
+            xl: "5xl",
+            "2xl": "7xl",
+          }}
           display={"flex"}
           justifyContent="center"
           bg="red.200"
           py={10}
+          px={10}
           backgroundImage="url('https://images.unsplash.com/photo-1513185041617-8ab03f83d6c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80')"
         >
           <VStack w="6xl" alignItems={"flex-start"} color="white" spacing={6}>
             <Text fontSize={20} fontWeight={600}>
               신간 전체 리스트
             </Text>
-            <Grid templateColumns="repeat(7, 1fr)" gap={4}>
+            <Grid
+              height="300px"
+              overflow={"hidden"}
+              templateColumns={{
+                sm: "repeat(2, 1fr)",
+                md: "repeat(4, 1fr)",
+                lg: "repeat(5, 1fr)",
+                xl: "repeat(6, 1fr)",
+                "2xl": "repeat(7, 1fr)",
+              }}
+              gap={4}
+              gridAutoFlow="row dense"
+            >
               {isLoadingItemNewAll ? <BookSkeleton /> : null}
               {dataItemNewAll?.map((data, index) => (
                 <Book
@@ -299,7 +319,18 @@ export default function Home() {
           <Text color={textColor} fontSize={20} fontWeight={600}>
             주목할 만한 신간 리스트
           </Text>
-          <Grid templateColumns="repeat(7, 1fr)" gap={4}>
+          <Grid
+            height="300px"
+            overflow={"hidden"}
+            templateColumns={{
+              sm: "repeat(2, 1fr)",
+              md: "repeat(4, 1fr)",
+              lg: "repeat(5, 1fr)",
+              xl: "repeat(6, 1fr)",
+              "2xl": "repeat(7, 1fr)",
+            }}
+            gap={4}
+          >
             {isLoadingItemNewSpecial ? <BookSkeleton /> : null}
             {dataItemNewSpecial?.map((data, index) => (
               <Book

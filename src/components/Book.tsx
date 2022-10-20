@@ -63,7 +63,7 @@ export default function Book({
                   {dateFormat(pubDate)}
                 </Text>
                 <Text color={fontColor} fontSize={"sm"}>
-                  {publisher}
+                  {publisher.substr(0, 12)}
                 </Text>
               </VStack>
             </VStack>

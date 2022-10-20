@@ -48,7 +48,10 @@ export default function Header() {
       backgroundColor={headerColor}
       boxShadow="sm"
     >
-      <HStack w="7xl" justifyContent={"space-between"}>
+      <HStack
+        w={{ md: "60%", lg: "70%", xl: "80%", "2xl": "80%" }}
+        justifyContent={"space-between"}
+      >
         <HStack spacing={6}>
           <Link to="/">
             <Box mb={2}>
