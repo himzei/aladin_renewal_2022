@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Badge, Box, GridItem, Image, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
@@ -25,7 +24,6 @@ export default function Book({
   fontColor,
   rankNum,
 }: IBookProp) {
-  const [visible, setVisible] = useState(1);
   return (
     <>
       <Link to={`/book/${isbn}`}>
