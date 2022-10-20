@@ -18,12 +18,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { bookDetail } from "../api";
 import { useParams } from "react-router-dom";
-import {
-  dateFormat,
-  deductFormat,
-  priceFormat,
-  reviewPlus,
-} from "../lib/utils";
+import { dateFormat, deductFormat, priceFormat } from "../lib/utils";
 import { BsFillBasketFill } from "react-icons/bs";
 import { AiFillCreditCard, AiFillStar } from "react-icons/ai";
 import { GiPresent } from "react-icons/gi";
