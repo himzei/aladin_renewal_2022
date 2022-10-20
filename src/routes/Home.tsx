@@ -1,7 +1,10 @@
 import {
   Box,
+  Button,
   Grid,
+  GridItem,
   Heading,
+  Image,
   Tab,
   TabList,
   TabPanel,
@@ -267,53 +270,168 @@ export default function Home() {
         </VStack>
 
         <Box
-          w={{
-            sm: "md",
-            md: "3xl",
-            lg: "4xl",
-            xl: "5xl",
-            "2xl": "7xl",
-          }}
+          w="100vw"
+          h="500px"
           display={"flex"}
           justifyContent="center"
-          bg="red.200"
           py={10}
-          px={10}
           backgroundImage="url('https://images.unsplash.com/photo-1513185041617-8ab03f83d6c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80')"
+          position="relative"
         >
-          <VStack w="6xl" alignItems={"flex-start"} color="white" spacing={6}>
-            <Text fontSize={20} fontWeight={600}>
-              신간 전체 리스트
-            </Text>
-            <Grid
-              height="300px"
-              overflow={"hidden"}
-              templateColumns={{
-                sm: "repeat(2, 1fr)",
-                md: "repeat(4, 1fr)",
-                lg: "repeat(5, 1fr)",
-                xl: "repeat(6, 1fr)",
-                "2xl": "repeat(7, 1fr)",
-              }}
-              gap={4}
-              gridAutoFlow="row dense"
-            >
-              {isLoadingItemNewAll ? <BookSkeleton /> : null}
-              {dataItemNewAll?.map((data, index) => (
-                <Book
-                  key={index}
-                  cover={data.cover}
-                  title={data.title}
-                  priceSales={data.priceSales}
-                  pubDate={data.pubDate}
-                  publisher={data.publisher}
-                  isbn={data.isbn}
-                  fontColor={"white"}
-                />
-              ))}
-            </Grid>
-          </VStack>
+          <Box
+            position="absolute"
+            w="full"
+            h="full"
+            left={0}
+            top={0}
+            bg="white"
+            opacity={0.7}
+          />
+          <Grid templateColumns={"2fr 5fr"} w="6xl" zIndex={2} gap={12}>
+            <GridItem>
+              <VStack
+                alignItems={"flex-start"}
+                justifyContent={"center"}
+                h="full"
+                w="90%"
+                spacing={12}
+              >
+                <Text fontSize={40} fontWeight={700}>
+                  Blogs
+                </Text>
+                <VStack alignItems={"flex-start"} fontWeight={700}>
+                  <Text color="blue.600">발견의 기쁨을 선물합니다</Text>
+                  <Text fontSize={28}>
+                    취향을 분석해 꼭 맞는 책을 추천해 드릴께요!
+                  </Text>
+                </VStack>
+                <Button colorScheme="blue" size="lg">
+                  로그인하고 더 많은 추천 받기
+                </Button>
+              </VStack>
+            </GridItem>
+            <GridItem>
+              <Grid
+                templateColumns={"repeat(3, 1fr)"}
+                gap={4}
+                h="full"
+                display={"flex"}
+                alignItems={"center"}
+              >
+                <GridItem>
+                  <VStack bg="white" rounded="2xl" overflow={"hidden"}>
+                    <Box
+                      w="260px"
+                      h="160px"
+                      overflow={"hidden"}
+                      objectFit={"cover"}
+                    >
+                      <Image
+                        objectFit={"cover"}
+                        src="https://plus.unsplash.com/premium_photo-1661961749677-13577d0f45da?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                      />
+                    </Box>
+                    <VStack p={4} spacing={4} alignItems="flex-start">
+                      <VStack alignItems="flex-start">
+                        <Text fontWeight={700} fontSize={20}>
+                          종합추천
+                        </Text>
+                        <Text>
+                          고객님의 취향을 분석해 이틀밤낮 고민하여 고른 책을
+                          확인하세요.
+                        </Text>
+                      </VStack>
+                      <Text fontSize={12}>2022년 10월 18일</Text>
+                    </VStack>
+                  </VStack>
+                </GridItem>
+                <GridItem>
+                  <VStack bg="white" rounded="2xl" overflow={"hidden"}>
+                    <Box
+                      w="260px"
+                      h="160px"
+                      overflow={"hidden"}
+                      objectFit={"cover"}
+                    >
+                      <Image
+                        objectFit={"cover"}
+                        src="https://images.unsplash.com/photo-1419640303358-44f0d27f48e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1085&q=80"
+                      />
+                    </Box>
+                    <VStack p={4} spacing={4} alignItems="flex-start">
+                      <VStack alignItems="flex-start">
+                        <Text fontWeight={700} fontSize={20}>
+                          종합추천
+                        </Text>
+                        <Text>
+                          고객님의 취향을 분석해 이틀밤낮 고민하여 고른 책을
+                          확인하세요.
+                        </Text>
+                      </VStack>
+                      <Text fontSize={12}>2022년 10월 18일</Text>
+                    </VStack>
+                  </VStack>
+                </GridItem>
+                <GridItem>
+                  <VStack bg="white" rounded="2xl" overflow={"hidden"}>
+                    <Box
+                      w="260px"
+                      h="160px"
+                      overflow={"hidden"}
+                      objectFit={"cover"}
+                    >
+                      <Image src="https://images.unsplash.com/photo-1588581939864-064d42ace7cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
+                    </Box>
+                    <VStack p={4} spacing={4} alignItems="flex-start">
+                      <VStack alignItems="flex-start">
+                        <Text fontWeight={700} fontSize={20}>
+                          종합추천
+                        </Text>
+                        <Text>
+                          고객님의 취향을 분석해 이틀밤낮 고민하여 고른 책을
+                          확인하세요.
+                        </Text>
+                      </VStack>
+                      <Text fontSize={12}>2022년 10월 18일</Text>
+                    </VStack>
+                  </VStack>
+                </GridItem>
+              </Grid>
+            </GridItem>
+          </Grid>
         </Box>
+
+        <VStack w="6xl" alignItems={"flex-start"} spacing={6}>
+          <Text fontSize={20} fontWeight={600}>
+            신간 전체 리스트
+          </Text>
+          <Grid
+            height="300px"
+            overflow={"hidden"}
+            templateColumns={{
+              sm: "repeat(2, 1fr)",
+              md: "repeat(4, 1fr)",
+              lg: "repeat(5, 1fr)",
+              xl: "repeat(6, 1fr)",
+              "2xl": "repeat(7, 1fr)",
+            }}
+            gap={4}
+            gridAutoFlow="row dense"
+          >
+            {isLoadingItemNewAll ? <BookSkeleton /> : null}
+            {dataItemNewAll?.map((data, index) => (
+              <Book
+                key={index}
+                cover={data.cover}
+                title={data.title}
+                priceSales={data.priceSales}
+                pubDate={data.pubDate}
+                publisher={data.publisher}
+                isbn={data.isbn}
+              />
+            ))}
+          </Grid>
+        </VStack>
 
         <VStack alignItems={"flex-start"} spacing={6}>
           <Text color={textColor} fontSize={20} fontWeight={600}>
