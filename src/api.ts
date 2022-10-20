@@ -9,7 +9,7 @@ import { QueryFunctionContext } from "@tanstack/react-query";
 import { ILogInForm } from "./components/LoginModal";
 import { ISignUpForm } from "./components/SignUpModal";
 
-const BASE_PATH = "http://localhost:4000";
+const BASE_PATH = "https://api-backend-2022.herokuapp.com";
 
 export async function bestSeller() {
   return await fetch(`${BASE_PATH}/api/v1/bestseller`).then((response) =>
@@ -91,10 +91,11 @@ export async function eBook() {
   );
 }
 
-export async function Search(term: string) {
-  return await fetch(`${BASE_PATH}/api/v1/search/${term}`).then((response) =>
-    response.json()
-  );
+export async function search(term: any) {
+  console.log("API Term", term.queryKey[1]);
+  return await fetch(
+    `${BASE_PATH}/api/v1/search?term=${term.queryKey[1]}`
+  ).then((response) => response.json());
 }
 
 export async function usernameSignUp({

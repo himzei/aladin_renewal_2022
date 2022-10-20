@@ -7,6 +7,7 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
@@ -17,6 +18,7 @@ import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaListUl } from "react-icons/fa";
 import BookList from "../components/BookList";
 import BookSkeleton from "../components/BookSkeleton";
+import SearchForm from "../components/SearchForm";
 
 export default function InBound() {
   const { data, isLoading } = useQuery<IBookResult[]>(
@@ -27,9 +29,38 @@ export default function InBound() {
   return (
     <>
       <VStack spacing={10}>
-        <Stack w="7xl">
-          <Box h="200px" bg={"red.200"}></Box>
-        </Stack>
+        <VStack w="7xl">
+          <VStack
+            h="200px"
+            w="full"
+            align={"center"}
+            justifyContent="center"
+            backgroundImage={
+              "url('https://images.unsplash.com/photo-1603905204400-e1636c7ae0c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80')"
+            }
+            backgroundPosition="center"
+            backgroundSize="cover"
+            position="relative"
+          >
+            <Box
+              position="absolute"
+              w="full"
+              h="full"
+              left={0}
+              top={0}
+              bgGradient="linear(to-r, #060606, #404040)"
+              opacity="0.7"
+            />
+            <Stack zIndex={2}>
+              <Text fontSize={24} color="white" fontWeight={700}>
+                국내도서
+              </Text>
+            </Stack>
+            <Box w="80%">
+              <SearchForm />
+            </Box>
+          </VStack>
+        </VStack>
         <Tabs>
           <TabList display={"flex"} justifyContent="flex-end">
             <Tab>

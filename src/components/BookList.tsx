@@ -38,7 +38,7 @@ export default function BookList({
 }: IBookProp) {
   return (
     <Link to={`/book/${isbn}`}>
-      <Grid templateColumns={"250px 1fr"} gap={8}>
+      <Grid templateColumns={"250px 1fr"} gap={6}>
         <GridItem>
           <Box
             rounded={"20px"}

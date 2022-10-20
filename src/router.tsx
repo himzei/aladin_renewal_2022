@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-
 import Root from "./components/Root";
 import BookDetail from "./routes/BookDetail";
 import Dvd from "./routes/Dvd";
@@ -51,7 +50,7 @@ const router = createBrowserRouter([
         element: <Ebook />,
       },
       {
-        path: "/search",
+        path: "/search/:term",
         element: <Search />,
       },
     ],

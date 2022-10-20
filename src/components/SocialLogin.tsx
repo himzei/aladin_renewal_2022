@@ -6,7 +6,19 @@ interface SocialLoginProps {
   btnText: string;
 }
 
+// interface IConfig {
+//   clientId: string;
+//   allow_signup: boolean;
+//   scope: string;
+// }
+
 export default function SocialLogin({ btnText }: SocialLoginProps) {
+  const clientId = "afeec0fffd0d2a881924";
+  const allow_signup = false;
+  const scope = "read:user user:email";
+  const baseUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&allow_signup=${allow_signup}&scope=${scope}`;
+  const finalUrl = `${baseUrl}`;
+
   return (
     <Box>
       <HStack my={4}>
@@ -17,12 +29,7 @@ export default function SocialLogin({ btnText }: SocialLoginProps) {
         <Divider />
       </HStack>
       <VStack>
-        <Button
-          as="a"
-          href="https://github.com/login/oauth/authorize?client_id=0e7cf626f2d15f28509f&scope=read:user,user:email"
-          w="100%"
-          leftIcon={<SiGithub />}
-        >
+        <Button as="a" href={finalUrl} w="100%" leftIcon={<SiGithub />}>
           Github {btnText}
         </Button>
         <Button

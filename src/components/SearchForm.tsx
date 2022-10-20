@@ -5,16 +5,20 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { bestSeller } from "../api";
-import { IBookResult } from "../routes/Home";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
+interface ITerm {
+  term: string;
+}
 
 export default function SearchForm() {
-  const { handleSubmit, register } = useForm();
-  const { data, isLoading } = useQuery<IBookResult[]>(["book"], bestSeller);
-  console.log(data, isLoading);
-  const onSubmit = () => {};
+  const { handleSubmit, register } = useForm<ITerm>();
+  let navigate = useNavigate();
+
+  const onSubmit = ({ term }: ITerm) => {
+    navigate(`/search/${term}`);
+  };
   return (
     <Box as="form" w="full" onSubmit={handleSubmit(onSubmit)}>
       <InputGroup size="lg">
