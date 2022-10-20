@@ -141,31 +141,7 @@ export default function Home() {
                     {isLoadingBestSeller ? <BookSkeleton /> : null}
                     {dataBestSeller?.map((data, index) => (
                       <Link to={`/book/${data.isbn}`} key={index}>
-                        <GridItem
-                        // as={motion.div}
-                        // key={page}
-                        // custom={direction}
-                        // variants={variants}
-                        // initial="enter"
-                        // animate="center"
-                        // exit="exit"
-                        // transition={{
-                        //   x: { type: "spring", stiffness: 300, damping: 30 },
-                        //   opacity: { duration: 0.2 },
-                        // }}
-                        // drag="x"
-                        // dragConstraints={{ left: 0, right: 0 }}
-                        // dragElastic={1}
-                        // onDragEnd={(e, { offset, velocity }) => {
-                        //   const swipe = swipePower(offset.x, velocity.x);
-
-                        //   if (swipe < -swipeConfidenceThreshold) {
-                        //     paginate(1);
-                        //   } else if (swipe > swipeConfidenceThreshold) {
-                        //     paginate(-1);
-                        //   }
-                        // }}
-                        >
+                        <GridItem>
                           <Box>
                             <VStack position="relative">
                               <Box
@@ -222,12 +198,6 @@ export default function Home() {
                     ))}
                   </AnimatePresence>
                 </Grid>
-                <Box className="next" onClick={() => paginate(1)}>
-                  {"‣"}
-                </Box>
-                <Box className="prev" onClick={() => paginate(-1)}>
-                  {"‣"}
-                </Box>
               </TabPanel>
               <TabPanel>
                 <Grid
