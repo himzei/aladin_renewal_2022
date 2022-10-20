@@ -137,6 +137,7 @@ export default function Home() {
       </VStack>
 
       <VStack spacing={10}>
+        {/* 베스트셀러 */}
         <VStack alignItems={"flex-start"}>
           <Text color={textColor} fontSize={20} fontWeight={600} ml={4} mb={-4}>
             베스트셀러
@@ -236,6 +237,7 @@ export default function Home() {
           </Tabs>
         </VStack>
 
+        {/* 블로거 베스트셀러 */}
         <VStack alignItems={"flex-start"} spacing={6}>
           <Text fontSize={20} fontWeight={600} color={textColor}>
             블로거 베스트셀러
@@ -269,6 +271,7 @@ export default function Home() {
           </Grid>
         </VStack>
 
+        {/* 티스토리 연동 */}
         <Box
           w="100vw"
           h="500px"
@@ -401,6 +404,7 @@ export default function Home() {
           </Grid>
         </Box>
 
+        {/* 신간 전체 리스트 */}
         <VStack w="6xl" alignItems={"flex-start"} spacing={6}>
           <Text fontSize={20} fontWeight={600}>
             신간 전체 리스트
@@ -433,6 +437,7 @@ export default function Home() {
           </Grid>
         </VStack>
 
+        {/* 주목할 만한 신간 리스트 */}
         <VStack alignItems={"flex-start"} spacing={6}>
           <Text color={textColor} fontSize={20} fontWeight={600}>
             주목할 만한 신간 리스트
@@ -463,6 +468,13 @@ export default function Home() {
               />
             ))}
           </Grid>
+        </VStack>
+
+        {/* 중고매장 위치 */}
+        <VStack alignItems={"flex-start"} spacing={6} w="6xl">
+          <Text color={textColor} fontSize={20} fontWeight={600} w="6xl">
+            중고매장 위치
+          </Text>
         </VStack>
       </VStack>
     </VStack>

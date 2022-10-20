@@ -23,6 +23,7 @@ import { BsFillBasketFill } from "react-icons/bs";
 import { AiFillCreditCard, AiFillStar } from "react-icons/ai";
 import { GiPresent } from "react-icons/gi";
 import { FiPocket } from "react-icons/fi";
+import BookSkeletonDetail from "../components/BookSkeletonDetail";
 
 interface IBookSubInfo {
   bestSellerRank: string;
@@ -63,10 +64,10 @@ export default function BookDetail() {
     ["bookDetail", id],
     bookDetail
   );
-  console.log(data, isLoading);
 
   return (
     <>
+      {isLoading ? <BookSkeletonDetail /> : null}
       {data?.map((item) => (
         <>
           <VStack
