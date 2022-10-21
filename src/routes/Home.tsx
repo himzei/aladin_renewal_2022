@@ -1,4 +1,3 @@
-import "../components/Map";
 import {
   Box,
   Button,
@@ -29,6 +28,7 @@ import {
 import Book from "../components/Book";
 import BookSkeleton from "../components/BookSkeleton";
 import SearchForm from "../components/SearchForm";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 export interface IBookResult {
   author: string;
@@ -482,7 +482,7 @@ export default function Home() {
             <Grid templateColumns={"1fr 4fr"} bg="gray.50">
               <GridItem>
                 <VStack p={4} alignItems="flex-start" spacing={4}>
-                  <Text fontWeight={600} color="blue.500">
+                  <Text fontWeight={600} fontSize={18} color="blue.500">
                     지역별 검색
                   </Text>
                   <Grid
@@ -518,8 +518,15 @@ export default function Home() {
                 </VStack>
               </GridItem>
               <GridItem w="full">
-                <Box>
-                  <div id="map" />
+                <Box bg="red.50" w="full" h="full">
+                  <Map
+                    center={{ lat: 33.5563, lng: 126.79581 }}
+                    style={{ width: "100%", height: "100%" }}
+                  >
+                    <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
+                      <div style={{ color: "#000" }}>Hello World!</div>
+                    </MapMarker>
+                  </Map>
                 </Box>
               </GridItem>
             </Grid>

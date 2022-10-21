@@ -30,7 +30,13 @@ export default function Book({
         <GridItem>
           <Box as={motion.div}>
             <VStack position="relative">
-              <Box w={"150px"} h="230px" overflow={"hidden"} rounded={"20px"}>
+              <Box
+                w={"150px"}
+                h="230px"
+                overflow={"hidden"}
+                rounded={"20px"}
+                boxShadow="md"
+              >
                 <Image
                   src={cover}
                   objectFit="cover"
