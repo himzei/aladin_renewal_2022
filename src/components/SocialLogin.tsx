@@ -1,6 +1,7 @@
 import { Box, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import { AiFillGoogleSquare } from "react-icons/ai";
 import { SiKakaotalk, SiNaver, SiGithub } from "react-icons/si";
+import { BsGoogle } from "react-icons/bs";
 
 interface SocialLoginProps {
   btnText: string;
@@ -28,36 +29,26 @@ export default function SocialLogin({ btnText }: SocialLoginProps) {
         </Text>
         <Divider />
       </HStack>
-      <VStack>
-        <Button as="a" href={finalUrl} w="100%" leftIcon={<SiGithub />}>
-          Github {btnText}
-        </Button>
-        <Button
-          as="a"
-          w="100%"
-          leftIcon={<SiKakaotalk />}
-          colorScheme={"yellow"}
-          variant="outline"
-        >
-          카카오로 {btnText}
-        </Button>
-        <Button
-          w="100%"
-          variant={"outline"}
-          leftIcon={<SiNaver />}
-          colorScheme={"green"}
-        >
-          네이버로 {btnText}
-        </Button>
-        <Button
-          w="100%"
-          leftIcon={<AiFillGoogleSquare size={22} />}
-          colorScheme={"blue"}
-          variant="outline"
-        >
-          Google {btnText}
-        </Button>
-      </VStack>
+      <HStack
+        h="50px"
+        fontSize={"4xl"}
+        justifyContent="center"
+        alignItems={"center"}
+        spacing={8}
+      >
+        <Box as="a" href={finalUrl}>
+          <SiGithub />
+        </Box>
+        <Box as="a">
+          <SiKakaotalk color="#fcdc12" />
+        </Box>
+        <Box>
+          <SiNaver color="#20a534" />
+        </Box>
+        <Box>
+          <BsGoogle />
+        </Box>
+      </HStack>
     </Box>
   );
 }

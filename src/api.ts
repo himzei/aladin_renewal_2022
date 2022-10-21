@@ -11,6 +11,12 @@ import { ISignUpForm } from "./components/SignUpModal";
 
 const BASE_PATH = "https://api-backend-2022.herokuapp.com";
 
+export async function blogList() {
+  return await fetch(`${BASE_PATH}/api/v1/blogList`).then((response) =>
+    response.json()
+  );
+}
+
 export async function bestSeller() {
   return await fetch(`${BASE_PATH}/api/v1/bestseller`).then((response) =>
     response.json()

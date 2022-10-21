@@ -28,7 +28,7 @@ export default function Used() {
       <VStack spacing={10}>
         <VStack w="7xl">
           <VStack
-            h="200px"
+            h="300px"
             w="full"
             align={"center"}
             justifyContent="center"

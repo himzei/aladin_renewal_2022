@@ -22,6 +22,7 @@ import {
   bestSellerMonth,
   bestSellerYear,
   blogBest,
+  blogList,
   itemNewAll,
   itemNewSpecial,
 } from "../api";
@@ -53,6 +54,11 @@ export default function Home() {
     "linear(to-r, #060606, #404040 )"
   );
   const opacityColor = useColorModeValue("0.7", "0.8");
+  const { data: dataBlogList, isLoading: isLoadingBlogList } = useQuery(
+    ["blogList"],
+    blogList
+  );
+  console.log(isLoadingBlogList, dataBlogList);
   const { data: dataBestSeller, isLoading: isLoadingBestSeller } = useQuery<
     IBookResult[]
   >(["books", "Bestseller"], bestSeller);
@@ -80,7 +86,7 @@ export default function Home() {
     <VStack spacing={10} mb={16}>
       <VStack
         position={"relative"}
-        h="300px"
+        h="350px"
         minWidth={{
           sm: "500px",
           md: "700px",
@@ -478,17 +484,17 @@ export default function Home() {
           <Text color={textColor} fontSize={20} fontWeight={600} w="6xl">
             중고매장 위치
           </Text>
-          <Stack h="300px" w="full">
+          <Stack h="350px" w="full">
             <Grid templateColumns={"1fr 4fr"} bg="gray.50">
               <GridItem>
-                <VStack p={4} alignItems="flex-start" spacing={4}>
+                <VStack p={4} alignItems="flex-start" spacing={12}>
                   <Text fontWeight={600} fontSize={18} color="blue.500">
                     지역별 검색
                   </Text>
                   <Grid
                     templateColumns={"1fr 1fr"}
                     fontWeight={600}
-                    gap={4}
+                    gap={3}
                     w="190px"
                   >
                     {[

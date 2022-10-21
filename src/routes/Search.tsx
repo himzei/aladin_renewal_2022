@@ -30,7 +30,7 @@ export default function Search() {
     <VStack mb={10} spacing={12}>
       <VStack w="7xl">
         <VStack
-          h="200px"
+          h="300px"
           w="full"
           align={"center"}
           justifyContent="center"
