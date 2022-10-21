@@ -1,10 +1,13 @@
+import "../components/Map";
 import {
   Box,
   Button,
+  Divider,
   Grid,
   GridItem,
   Heading,
   Image,
+  Stack,
   Tab,
   TabList,
   TabPanel,
@@ -475,6 +478,55 @@ export default function Home() {
           <Text color={textColor} fontSize={20} fontWeight={600} w="6xl">
             중고매장 위치
           </Text>
+          <Stack h="300px" w="full">
+            <Grid templateColumns={"1fr 4fr"} bg="gray.50">
+              <GridItem>
+                <VStack p={4} alignItems="flex-start" spacing={4}>
+                  <Text fontWeight={600}>지역별 검색</Text>
+                  <Grid
+                    templateColumns={"1fr 1fr"}
+                    fontWeight={600}
+                    gap={4}
+                    w="190px"
+                  >
+                    {[
+                      "서울(10)",
+                      "부산(5)",
+                      "대구(2)",
+                      "인천(3)",
+                      "광주(2)",
+                      "대전(2)",
+                      "경기(2)",
+                      "강원(2)",
+                      "충북(2)",
+                      "충남(2)",
+                      "전북(2)",
+                      "전남(2)",
+                      "경북(2)",
+                      "경남(2)",
+                      "제주(2)",
+                    ].map((i) => (
+                      <GridItem key={i}>
+                        <Box display="flex" justifyContent={"flex-start"}>
+                          <Text>{[i]}</Text>
+                        </Box>
+                      </GridItem>
+                    ))}
+                  </Grid>
+                </VStack>
+              </GridItem>
+              <GridItem w="full">
+                <Box>
+                  <div id="map" />
+                </Box>
+              </GridItem>
+            </Grid>
+          </Stack>
+        </VStack>
+
+        {/* 의미없는 divider */}
+        <VStack>
+          <Divider />
         </VStack>
       </VStack>
     </VStack>

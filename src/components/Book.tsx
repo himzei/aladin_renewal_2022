@@ -57,13 +57,13 @@ export default function Book({
               </Badge>
               <VStack alignItems={"flex-start"} spacing={0} w="full">
                 <Text color={fontColor} fontSize={"md"} fontWeight={"bold"}>
-                  {title.substr(0, 12)}
+                  {title.substr(0, 11)}
                 </Text>
                 <Text letterSpacing={"-1px"} color={fontColor} fontSize={"xs"}>
                   {dateFormat(pubDate)}
                 </Text>
                 <Text color={fontColor} fontSize={"sm"}>
-                  {publisher.substr(0, 12)}
+                  {publisher.substr(0, 11)}
                 </Text>
               </VStack>
             </VStack>
