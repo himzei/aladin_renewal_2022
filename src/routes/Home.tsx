@@ -482,7 +482,9 @@ export default function Home() {
             <Grid templateColumns={"1fr 4fr"} bg="gray.50">
               <GridItem>
                 <VStack p={4} alignItems="flex-start" spacing={4}>
-                  <Text fontWeight={600}>지역별 검색</Text>
+                  <Text fontWeight={600} color="blue.500">
+                    지역별 검색
+                  </Text>
                   <Grid
                     templateColumns={"1fr 1fr"}
                     fontWeight={600}

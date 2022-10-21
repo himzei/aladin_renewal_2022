@@ -22,7 +22,6 @@ import SearchForm from "../components/SearchForm";
 
 export default function Dvd() {
   const { data, isLoading } = useQuery<IBookResult[]>(["books", "dvd"], dvd);
-  console.log(data);
   return (
     <>
       <VStack spacing={10}>
@@ -77,6 +76,7 @@ export default function Dvd() {
                     rowGap={10}
                     gridAutoFlow="row dense"
                   >
+                    {isLoading ? <BookSkeleton /> : null}
                     {data?.map((data, index) => (
                       <Book
                         key={index}
