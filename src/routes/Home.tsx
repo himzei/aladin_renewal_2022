@@ -5,7 +5,6 @@ import {
   Grid,
   GridItem,
   Heading,
-  Image,
   Tab,
   TabList,
   TabPanel,
@@ -28,11 +27,8 @@ import {
 import Book from "../components/Book";
 import BookSkeleton from "../components/BookSkeleton";
 import SearchForm from "../components/SearchForm";
-import { dateFormat } from "../lib/utils";
-import Test from "../components/Test";
 import LocationMap from "../components/LocationMap";
 import BlogMain from "../components/BlogMain";
-import Logo from "../components/Logo";
 
 export interface IBookResult {
   author: string;

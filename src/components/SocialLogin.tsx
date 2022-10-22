@@ -1,5 +1,4 @@
-import { Box, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
-import { AiFillGoogleSquare } from "react-icons/ai";
+import { Box, Divider, HStack, Text } from "@chakra-ui/react";
 import { SiKakaotalk, SiNaver, SiGithub } from "react-icons/si";
 import { BsGoogle } from "react-icons/bs";
 

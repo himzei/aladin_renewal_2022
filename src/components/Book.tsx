@@ -1,12 +1,4 @@
-import {
-  Badge,
-  Box,
-  GridItem,
-  Image,
-  scaleFadeConfig,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Badge, Box, GridItem, Image, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { dateFormat } from "../lib/utils";

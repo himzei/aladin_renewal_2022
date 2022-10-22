@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   Box,
   Button,
+  CloseButton,
   Grid,
   GridItem,
   HStack,
@@ -10,8 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { motion } from "framer-motion";
-import { AiFillCloseSquare } from "react-icons/ai";
-import { Link } from "react-router-dom";
 
 interface IAddress {
   type: string;
@@ -189,14 +188,15 @@ export default function LocationMap() {
             h="full"
             zIndex={2}
             bg="gray.50"
+            overflow={"auto"}
           >
             <Box
               position="absolute"
-              right="0"
-              top="0"
+              top={0}
+              right={0}
               display={clicked ? "block" : "none"}
             >
-              <AiFillCloseSquare size={20} color="#3D62AD" />
+              <CloseButton onClick={() => setClicked(false)} />
             </Box>
             <VStack mt={12} spacing={10}>
               <VStack fontSize={12} alignItems="flex-start" spacing={2} px={4}>

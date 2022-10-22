@@ -22,10 +22,10 @@ import Logo from "./Logo";
 export default function Header() {
   const { colorMode, toggleColorMode } = useColorMode();
   const headerColor = useColorModeValue("gray.100", "gray.700");
-  const logoColor = useColorModeValue(
-    "../../images/aladinlogo_kor.png",
-    "../../images/aladinlogo_kor_night.png"
-  );
+  // const logoColor = useColorModeValue(
+  //   "../../images/aladinlogo_kor.png",
+  //   "../../images/aladinlogo_kor_night.png"
+  // );
   const {
     onOpen: onLoginOpen,
     isOpen: isLoginOpen,
