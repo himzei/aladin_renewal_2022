@@ -6,7 +6,6 @@ import {
   GridItem,
   Heading,
   Image,
-  Stack,
   Tab,
   TabList,
   TabPanel,
@@ -29,7 +28,11 @@ import {
 import Book from "../components/Book";
 import BookSkeleton from "../components/BookSkeleton";
 import SearchForm from "../components/SearchForm";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { dateFormat } from "../lib/utils";
+import Test from "../components/Test";
+import LocationMap from "../components/LocationMap";
+import BlogMain from "../components/BlogMain";
+import Logo from "../components/Logo";
 
 export interface IBookResult {
   author: string;
@@ -46,6 +49,13 @@ export interface IBookResult {
   isbn: string;
   bestRank: number;
 }
+export interface IBlogResult {
+  content: string;
+  id: string;
+  published: string;
+  title: string;
+  url: string;
+}
 
 export default function Home() {
   const textColor = useColorModeValue("gray.700", "white");
@@ -54,10 +64,9 @@ export default function Home() {
     "linear(to-r, #060606, #404040 )"
   );
   const opacityColor = useColorModeValue("0.7", "0.8");
-  const { data: dataBlogList, isLoading: isLoadingBlogList } = useQuery(
-    ["blogList"],
-    blogList
-  );
+  const { data: dataBlogList, isLoading: isLoadingBlogList } = useQuery<
+    IBlogResult[]
+  >(["blogList"], blogList);
   console.log(isLoadingBlogList, dataBlogList);
   const { data: dataBestSeller, isLoading: isLoadingBestSeller } = useQuery<
     IBookResult[]
@@ -280,7 +289,7 @@ export default function Home() {
           </Grid>
         </VStack>
 
-        {/* 티스토리 연동 */}
+        {/* 구글 Blogger 연동 */}
         <Box
           w="100vw"
           h="500px"
@@ -330,84 +339,14 @@ export default function Home() {
                 display={"flex"}
                 alignItems={"center"}
               >
-                <GridItem>
-                  <VStack bg="white" rounded="2xl" overflow={"hidden"}>
-                    <Box
-                      w="260px"
-                      h="160px"
-                      overflow={"hidden"}
-                      objectFit={"cover"}
-                    >
-                      <Image
-                        objectFit={"cover"}
-                        src="https://plus.unsplash.com/premium_photo-1661961749677-13577d0f45da?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                      />
-                    </Box>
-                    <VStack p={4} spacing={4} alignItems="flex-start">
-                      <VStack alignItems="flex-start">
-                        <Text fontWeight={700} fontSize={20}>
-                          종합추천
-                        </Text>
-                        <Text>
-                          고객님의 취향을 분석해 이틀밤낮 고민하여 고른 책을
-                          확인하세요.
-                        </Text>
-                      </VStack>
-                      <Text fontSize={12}>2022년 10월 18일</Text>
-                    </VStack>
-                  </VStack>
-                </GridItem>
-                <GridItem>
-                  <VStack bg="white" rounded="2xl" overflow={"hidden"}>
-                    <Box
-                      w="260px"
-                      h="160px"
-                      overflow={"hidden"}
-                      objectFit={"cover"}
-                    >
-                      <Image
-                        objectFit={"cover"}
-                        src="https://images.unsplash.com/photo-1419640303358-44f0d27f48e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1085&q=80"
-                      />
-                    </Box>
-                    <VStack p={4} spacing={4} alignItems="flex-start">
-                      <VStack alignItems="flex-start">
-                        <Text fontWeight={700} fontSize={20}>
-                          종합추천
-                        </Text>
-                        <Text>
-                          고객님의 취향을 분석해 이틀밤낮 고민하여 고른 책을
-                          확인하세요.
-                        </Text>
-                      </VStack>
-                      <Text fontSize={12}>2022년 10월 18일</Text>
-                    </VStack>
-                  </VStack>
-                </GridItem>
-                <GridItem>
-                  <VStack bg="white" rounded="2xl" overflow={"hidden"}>
-                    <Box
-                      w="260px"
-                      h="160px"
-                      overflow={"hidden"}
-                      objectFit={"cover"}
-                    >
-                      <Image src="https://images.unsplash.com/photo-1588581939864-064d42ace7cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
-                    </Box>
-                    <VStack p={4} spacing={4} alignItems="flex-start">
-                      <VStack alignItems="flex-start">
-                        <Text fontWeight={700} fontSize={20}>
-                          종합추천
-                        </Text>
-                        <Text>
-                          고객님의 취향을 분석해 이틀밤낮 고민하여 고른 책을
-                          확인하세요.
-                        </Text>
-                      </VStack>
-                      <Text fontSize={12}>2022년 10월 18일</Text>
-                    </VStack>
-                  </VStack>
-                </GridItem>
+                {dataBlogList?.map((data, index) => (
+                  <BlogMain
+                    title={data.title}
+                    content={data.content}
+                    published={data.published}
+                    key={index}
+                  />
+                ))}
               </Grid>
             </GridItem>
           </Grid>
@@ -481,63 +420,11 @@ export default function Home() {
 
         {/* 중고매장 위치 */}
         <VStack alignItems={"flex-start"} spacing={6} w="6xl">
-          <Text color={textColor} fontSize={20} fontWeight={600} w="6xl">
-            중고매장 위치
-          </Text>
-          <Stack h="350px" w="full">
-            <Grid templateColumns={"1fr 4fr"} bg="gray.50">
-              <GridItem>
-                <VStack p={4} alignItems="flex-start" spacing={12}>
-                  <Text fontWeight={600} fontSize={18} color="blue.500">
-                    지역별 검색
-                  </Text>
-                  <Grid
-                    templateColumns={"1fr 1fr"}
-                    fontWeight={600}
-                    gap={3}
-                    w="190px"
-                  >
-                    {[
-                      "서울(10)",
-                      "부산(5)",
-                      "대구(2)",
-                      "인천(3)",
-                      "광주(2)",
-                      "대전(2)",
-                      "경기(2)",
-                      "강원(2)",
-                      "충북(2)",
-                      "충남(2)",
-                      "전북(2)",
-                      "전남(2)",
-                      "경북(2)",
-                      "경남(2)",
-                      "제주(2)",
-                    ].map((i) => (
-                      <GridItem key={i}>
-                        <Box display="flex" justifyContent={"flex-start"}>
-                          <Text>{[i]}</Text>
-                        </Box>
-                      </GridItem>
-                    ))}
-                  </Grid>
-                </VStack>
-              </GridItem>
-              <GridItem w="full">
-                <Box bg="red.50" w="full" h="full">
-                  <Map
-                    center={{ lat: 33.5563, lng: 126.79581 }}
-                    style={{ width: "100%", height: "100%" }}
-                  >
-                    <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
-                      <div style={{ color: "#000" }}>Hello World!</div>
-                    </MapMarker>
-                  </Map>
-                </Box>
-              </GridItem>
-            </Grid>
-          </Stack>
+          <LocationMap />
         </VStack>
+
+        {/* 테스트 */}
+        <VStack w="full"></VStack>
 
         {/* 의미없는 divider */}
         <VStack>

@@ -3,11 +3,11 @@ import { Box, HStack, VStack } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const boxVariants = {
-  initial: {
-    x: 500,
+  initial: (back: boolean) => ({
+    x: back ? -500 : 500,
     opacity: 0,
     scale: 0,
-  },
+  }),
   visible: {
     x: 0,
     opacity: 1,
@@ -16,49 +16,83 @@ const boxVariants = {
       duration: 1,
     },
   },
-  leaving: {
-    x: -500,
+  leaving: (back: boolean) => ({
+    x: back ? 500 : -500,
     opacity: 0,
     scale: 0,
     transition: {
       duration: 1,
     },
-  },
+  }),
 };
 
 export default function Test() {
   const [visible, setVisible] = useState(1);
-  const next = () => setVisible((prev) => (prev === 10 ? 10 : prev + 1));
+  const [back, setBack] = useState(false);
+  const next = () => {
+    setBack(false);
+    setVisible((prev) => (prev === 10 ? 10 : prev + 1));
+  };
+  const prev = () => {
+    setBack(true);
+    setVisible((prev) => (prev === 1 ? 1 : prev - 1));
+  };
+  const [click, setClick] = useState(false);
+  const toggleClick = () => setClick((prev) => !prev);
 
   return (
-    <VStack>
+    <>
+      <VStack h="300px">
+        <Box
+          width={"100%"}
+          as={AnimatePresence}
+          custom={back}
+          display={"flex"}
+          justifyContent="flex-start"
+        >
+          <Box
+            custom={back}
+            key={visible}
+            as={motion.div}
+            variants={boxVariants}
+            initial="initial"
+            animate="visible"
+            exit="leaving"
+            width="300px"
+            height="200px"
+            background="teal"
+            display={"flex"}
+            justifyContent="center"
+            alignItems={"center"}
+            color="white"
+            fontSize={20}
+          >
+            {visible}
+          </Box>
+        </Box>
+      </VStack>
       <HStack>
-        <AnimatePresence>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) =>
-            i === visible ? (
-              <Box
-                key={i}
-                width="300px"
-                height="200px"
-                background="teal"
-                display={"flex"}
-                justifyContent="center"
-                alignItems={"center"}
-                as={motion.div}
-                variants={boxVariants}
-                initial="initial"
-                animate="visible"
-                exit="leaving"
-                color="white"
-                fontSize={20}
-              >
-                {i}
-              </Box>
-            ) : null
-          )}
-        </AnimatePresence>
+        <button onClick={next}>next</button>
+        <button onClick={prev}>prev</button>
       </HStack>
-      <button onClick={next}>next</button>
-    </VStack>
+      <Box
+        onClick={toggleClick}
+        w="5xl"
+        h="500px"
+        display={"flex"}
+        justifyContent={click ? "center" : "flex-start"}
+        alignItems={click ? "center" : "flex-start"}
+        bg="white"
+      >
+        <Box
+          as={motion.div}
+          layout
+          w="100px"
+          h="100px"
+          bg="teal"
+          rounded="full"
+        />
+      </Box>
+    </>
   );
 }

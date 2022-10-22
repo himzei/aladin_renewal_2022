@@ -3,7 +3,6 @@ import {
   Button,
   HStack,
   IconButton,
-  Image,
   Stack,
   Text,
   useColorMode,
@@ -18,6 +17,7 @@ import { BsFillMoonFill } from "react-icons/bs";
 import { FaSignInAlt } from "react-icons/fa";
 import { MdOutlineRememberMe } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
+import Logo from "./Logo";
 
 export default function Header() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -59,7 +59,8 @@ export default function Header() {
           <HStack spacing={6}>
             <Link to="/">
               <Box mb={2}>
-                <Image src={logoColor} alt="" w={32} />
+                <Logo />
+                {/* <Image src={logoColor} alt="" w={32} /> */}
               </Box>
             </Link>
             <HStack spacing={6}>
