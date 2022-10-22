@@ -1,4 +1,12 @@
-import { Badge, Box, GridItem, Image, Text, VStack } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  GridItem,
+  Image,
+  scaleFadeConfig,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { dateFormat } from "../lib/utils";
@@ -29,7 +37,7 @@ export default function Book({
       <Link to={`/book/${isbn}`}>
         <GridItem>
           <Box as={motion.div}>
-            <VStack position="relative">
+            <VStack position="relative" _hover={{ color: "#3D62AD" }}>
               <Box
                 w={"150px"}
                 h="230px"
@@ -38,6 +46,13 @@ export default function Book({
                 boxShadow="md"
               >
                 <Image
+                  _hover={{
+                    transform: "scale(1.1)",
+                    transition: "0.4s",
+                  }}
+                  _focus={{
+                    boxShadow: "outline",
+                  }}
                   src={cover}
                   objectFit="cover"
                   objectPosition={"center center"}

@@ -1,16 +1,37 @@
 import { useState } from "react";
-import { Box, Button, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { motion } from "framer-motion";
 import { AiFillCloseSquare } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
-const addressData = [
+interface IAddress {
+  type: string;
+  name: string;
+  time: string;
+  holiday: string;
+  address: string;
+  tel?: string;
+  page?: string;
+}
+
+const addressData: IAddress[] = [
   {
     type: "서울",
     name: "가로수길점",
     time: "09:30~22:00",
+    tel: "매장통합 콜센터 : 1544-2514 (평일 9-18시, 근무시간 외 ARS 안내)",
     holiday: "설날(음력), 추석 당일",
     address: "서울특별시 강남구 강남대로 152길 45",
+    page: "https://www.aladin.co.kr/usedstore/wstoremain.aspx?offcode=Sinsa",
   },
   {
     type: "서울",
@@ -39,6 +60,7 @@ const addressData = [
     time: "09:30~22:00",
     holiday: "설날(음력), 추석 당일",
     address: "서울특별시 광진구 능동로 111 지하 1층",
+    page: "https://www.aladin.co.kr/usedstore/wstoremain.aspx?offcode=Sinsa",
   },
   {
     type: "서울",
@@ -73,6 +95,7 @@ const addressData = [
     name: "신림점",
     time: "09:30~22:00",
     holiday: "설날(음력), 추석 당일",
+    tel: "매장통합 콜센터 : 1544-2514 (평일 9-18시, 근무시간 외 ARS 안내)",
     address: "서울특별시 관악구 신림로 318, 청암위브 지하 1층",
   },
   {
@@ -107,88 +130,168 @@ export default function LocationMap() {
         중고매장 위치
       </Text>
       <Box w="full" boxShadow="1px 1px 0 rgba(0, 0, 0, 0.1)">
-        <Grid templateColumns={"1fr 4fr"} bg="gray.50">
-          <GridItem zIndex={9}>
-            <VStack
-              h="400px"
-              spacing={8}
-              display={"flex"}
-              flexDirection="column"
-              p={4}
-              alignItems="flex-start"
-              boxShadow="inset -1px 0px 0 rgba(0, 0, 0, 0.1)"
-            >
-              <Text fontWeight={600} fontSize={18} color="blue.500">
-                지역별 검색
-              </Text>
-              <Grid templateColumns={"1fr 1fr"} gap={3} rowGap={4} w="190px">
-                {[
-                  "서울(17)",
-                  "경기(12)",
-                  "광주(2)",
-                  "부산(4)",
-                  "김해(1)",
-                  "대구(3)",
-                  "대전(2)",
-                  "마산(1)",
-                  "울산(1)",
-                  "인천(3)",
-                  "전주(1)",
-                  "창원(1)",
-                  "천안(1)",
-                  "청주(1)",
-                ].map((i) => (
-                  <GridItem key={i}>
-                    <Box display="flex" justifyContent={"flex-start"}>
-                      <Button
-                        colorScheme={"gray"}
-                        variant="link"
-                        onClick={toggleClicked}
-                      >
-                        <Text fontSize={"sm"}>{[i]}</Text>
-                      </Button>
-                    </Box>
-                  </GridItem>
-                ))}
-              </Grid>
-            </VStack>
-          </GridItem>
-          <GridItem w="full" position="relative">
-            <Box bg="red.50" w="full" h="full">
-              <Map
-                center={{ lat: 33.5563, lng: 126.79581 }}
-                style={{ width: "100%", height: "100%" }}
-              >
-                <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
-                  <div style={{ color: "#000" }}>Hello World!</div>
-                </MapMarker>
-              </Map>
-            </Box>
+        <HStack h="400px" bg="gray.50" position="relative">
+          <VStack
+            zIndex={3}
+            spacing={8}
+            bg="gray.100"
+            w="240px"
+            h="full"
+            display={"flex"}
+            flexDirection="column"
+            p={4}
+            alignItems="flex-start"
+            justifyContent={"flex-start"}
+          >
+            <Text fontWeight={600} fontSize={18} color="blue.500">
+              지역별 검색
+            </Text>
+            <Grid templateColumns={"1fr 1fr"} gap={3} rowGap={4} w="190px">
+              {[
+                "서울(17)",
+                "경기(12)",
+                "광주(2)",
+                "부산(4)",
+                "김해(1)",
+                "대구(3)",
+                "대전(2)",
+                "마산(1)",
+                "울산(1)",
+                "인천(3)",
+                "전주(1)",
+                "창원(1)",
+                "천안(1)",
+                "청주(1)",
+              ].map((i) => (
+                <GridItem key={i}>
+                  <Box display="flex" justifyContent={"flex-start"}>
+                    <Button
+                      colorScheme={"gray"}
+                      variant="link"
+                      onClick={toggleClicked}
+                    >
+                      <Text fontSize={"sm"}>{[i]}</Text>
+                    </Button>
+                  </Box>
+                </GridItem>
+              ))}
+            </Grid>
+          </VStack>
+
+          <Box
+            boxSizing={"border-box"}
+            position="absolute"
+            as={motion.div}
+            layout
+            left={clicked ? "210px" : "0"}
+            top="0"
+            w="210px"
+            h="full"
+            zIndex={2}
+            bg="gray.50"
+          >
             <Box
-              as={motion.div}
-              layout
-              boxShadow="1px 0 0 rgba(0, 0, 0, 0.1)"
               position="absolute"
-              left={clicked ? "0" : "-230px"}
+              right="0"
               top="0"
-              w="230px"
-              h="full"
-              bg="gray.50"
-              zIndex={1}
-              border={4}
-              borderColor="red"
+              display={clicked ? "block" : "none"}
             >
-              <Box
-                position="absolute"
-                right="0"
-                top="0"
-                display={clicked ? "block" : "none"}
-              >
-                <AiFillCloseSquare size={20} color="#3D62AD" />
-              </Box>
+              <AiFillCloseSquare size={20} color="#3D62AD" />
             </Box>
-          </GridItem>
-        </Grid>
+            <VStack mt={12} spacing={10}>
+              <VStack fontSize={12} alignItems="flex-start" spacing={2} px={4}>
+                <Button
+                  as={"a"}
+                  target="_blank"
+                  href={addressData[0].page}
+                  variant={"link"}
+                  colorScheme="gray"
+                  fontWeight={600}
+                  fontSize={16}
+                >
+                  알라딘 {addressData[0].name}
+                </Button>
+
+                <VStack spacing={1} alignItems="flex-start">
+                  <Text fontSize={14}>{addressData[0].address}</Text>
+                  <Text fontSize={12} fontWeight={300}>
+                    {addressData[0].time}
+                  </Text>
+                </VStack>
+              </VStack>
+              <VStack fontSize={12} alignItems="flex-start" spacing={2} px={4}>
+                <Button
+                  as={"a"}
+                  target="_blank"
+                  href={addressData[0].page}
+                  variant={"link"}
+                  colorScheme="gray"
+                  fontWeight={600}
+                  fontSize={16}
+                >
+                  알라딘 {addressData[0].name}
+                </Button>
+
+                <VStack spacing={1} alignItems="flex-start">
+                  <Text fontSize={14}>{addressData[0].address}</Text>
+                  <Text fontSize={12} fontWeight={300}>
+                    {addressData[0].time}
+                  </Text>
+                </VStack>
+              </VStack>
+              <VStack fontSize={12} alignItems="flex-start" spacing={2} px={4}>
+                <Button
+                  as={"a"}
+                  target="_blank"
+                  href={addressData[0].page}
+                  variant={"link"}
+                  colorScheme="gray"
+                  fontWeight={600}
+                  fontSize={16}
+                >
+                  알라딘 {addressData[0].name}
+                </Button>
+
+                <VStack spacing={1} alignItems="flex-start">
+                  <Text fontSize={14}>{addressData[0].address}</Text>
+                  <Text fontSize={12} fontWeight={300}>
+                    {addressData[0].time}
+                  </Text>
+                </VStack>
+              </VStack>
+              <VStack fontSize={12} alignItems="flex-start" spacing={2} px={4}>
+                <Button
+                  as={"a"}
+                  target="_blank"
+                  href={addressData[0].page}
+                  variant={"link"}
+                  colorScheme="gray"
+                  fontWeight={600}
+                  fontSize={16}
+                >
+                  알라딘 {addressData[0].name}
+                </Button>
+
+                <VStack spacing={1} alignItems="flex-start">
+                  <Text fontSize={14}>{addressData[0].address}</Text>
+                  <Text fontSize={12} fontWeight={300}>
+                    {addressData[0].time}
+                  </Text>
+                </VStack>
+              </VStack>
+            </VStack>
+          </Box>
+          <Box w="full" h="full" zIndex={1}>
+            <Map
+              center={{ lat: 33.5563, lng: 126.79581 }}
+              style={{ width: "100%", height: "100%" }}
+            >
+              <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
+                <div style={{ color: "#000" }}>Hello World!</div>
+              </MapMarker>
+            </Map>
+          </Box>
+        </HStack>
       </Box>
     </>
   );
