@@ -29,6 +29,7 @@ import BookSkeleton from "../components/BookSkeleton";
 import SearchForm from "../components/SearchForm";
 import LocationMap from "../components/LocationMap";
 import BlogMain from "../components/BlogMain";
+import Consult from "../components/Consult";
 
 export interface IBookResult {
   author: string;
@@ -419,8 +420,8 @@ export default function Home() {
           <LocationMap />
         </VStack>
 
-        {/* 테스트 */}
-        <VStack w="full"></VStack>
+        {/* 상담하기*/}
+        <Consult />
 
         {/* 의미없는 divider */}
         <VStack>

@@ -1,17 +1,13 @@
 import {
   Box,
-  Button,
   Grid,
   GridItem,
   HStack,
   Image,
-  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { TiMessages } from "react-icons/ti";
-import { FaQuinscape } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -74,35 +70,7 @@ export default function Footer() {
             </VStack>
           </GridItem>
           <GridItem>
-            <VStack h="100%" mt={20}>
-              <Stack direction="row" spacing={1} w="100%">
-                <Button
-                  leftIcon={<TiMessages />}
-                  colorScheme="blue"
-                  variant="outline"
-                >
-                  1:1 문의
-                </Button>
-                <Button
-                  leftIcon={<FaQuinscape />}
-                  colorScheme="blue"
-                  variant="outline"
-                >
-                  FAQ
-                </Button>
-              </Stack>
-              <Box w="100%">
-                <Button
-                  h="25px"
-                  w="100px"
-                  leftIcon={<FaQuinscape />}
-                  colorScheme="blue"
-                  variant="outline"
-                >
-                  Call us
-                </Button>
-              </Box>
-            </VStack>
+            <VStack h="100%" mt={20}></VStack>
           </GridItem>
         </Grid>
       </Box>
