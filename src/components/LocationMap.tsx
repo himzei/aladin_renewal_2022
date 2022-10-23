@@ -4,10 +4,17 @@ import {
   Box,
   Button,
   CloseButton,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
   Grid,
   GridItem,
   HStack,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
@@ -446,8 +453,10 @@ export default function LocationMap() {
   const cityFranch = (city: string) =>
     addressData.filter((item) => item.city === city);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [clicked, setClicked] = useState(false);
   const [franches, setFranches] = useState<IInfo[]>([]);
+  const [webPage, setWebPage] = useState("");
   const [address, setAddress] = useState([
     "서울특별시 강남구 강남대로 152길 45",
     "가로수길점",
@@ -456,6 +465,11 @@ export default function LocationMap() {
     setClicked(true);
     const result = cityFranch(city);
     setFranches(result);
+  };
+
+  const pageClick = (page: string) => {
+    setWebPage(page);
+    onOpen();
   };
 
   useEffect(() => {
@@ -627,13 +641,36 @@ export default function LocationMap() {
                         {franch.time}
                       </Text>
                     </VStack>
-                    <Badge colorScheme={"green"} variant="outline">
-                      <a href={franch.page} target="_blank" rel="noreferrer">
+                    <Badge
+                      cursor={"pointer"}
+                      colorScheme={"green"}
+                      variant="outline"
+                      onClick={() => pageClick(franch.page)}
+                    >
+                      홈페이지 바로가기
+                      {/* <a href={franch.page} target="_blank" rel="noreferrer">
                         홈페이지 바로가기
-                      </a>
+                      </a> */}
                     </Badge>
                   </VStack>
                 ))}
+                <Drawer onClose={onClose} isOpen={isOpen} size={"xl"}>
+                  <DrawerOverlay />
+                  <DrawerContent>
+                    <DrawerCloseButton />
+                    <DrawerHeader color={"gray.500"}>
+                      알라딘 중고서점
+                    </DrawerHeader>
+                    <DrawerBody>
+                      <iframe
+                        src={webPage}
+                        width="100%"
+                        height="100%"
+                        title={webPage}
+                      />
+                    </DrawerBody>
+                  </DrawerContent>
+                </Drawer>
               </VStack>
             </VStack>
           </Box>
