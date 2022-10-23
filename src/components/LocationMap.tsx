@@ -448,7 +448,10 @@ export default function LocationMap() {
 
   const [clicked, setClicked] = useState(false);
   const [franches, setFranches] = useState<IInfo[]>([]);
-  const [address, setAddress] = useState("서울특별시 강남구 강남대로 152길 45");
+  const [address, setAddress] = useState([
+    "서울특별시 강남구 강남대로 152길 45",
+    "가로수길점",
+  ]);
   const getClicked = (city: string) => {
     setClicked(true);
     const result = cityFranch(city);
@@ -460,7 +463,7 @@ export default function LocationMap() {
       window.kakao.maps.load(() => {
         const geocoder = new window.kakao.maps.services.Geocoder(); // 주소-좌표 반환 객체를 생성
         // 주소로 좌표를 검색
-        geocoder.addressSearch(address, (result: any, status: any) => {
+        geocoder.addressSearch(address[0], (result: any, status: any) => {
           if (status === window.kakao.maps.services.Status.OK) {
             // 정상적으로 검색이 완료됐으면
             var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
@@ -473,11 +476,26 @@ export default function LocationMap() {
               center: coords,
               level: 3,
             };
+            const iwContent = `
+            
+              <div style="padding:5px;">
+                <div style="text-align:center;font-size:14px;font-weight:600">알라딘 ${address[1]}</div>
+                <div style="text-align:center;font-size:12px;font-weight:500">${address[0]}</div>
+              </div>
+            
+            `;
+
             const map = new window.kakao.maps.Map(container, options);
             // 결과값으로 받은 위치를 마커로 표시
             new window.kakao.maps.Marker({
               map: map,
               position: coords,
+            });
+
+            new window.kakao.maps.InfoWindow({
+              map: map,
+              position: coords,
+              content: iwContent,
             });
           }
           // else {
@@ -587,16 +605,22 @@ export default function LocationMap() {
                     w="full"
                     key={index}
                   >
-                    <Text
+                    <Button
+                      variant={"link"}
                       fontSize={16}
                       fontWeight={600}
-                      onClick={() => setAddress(franch.address)}
+                      onClick={() => setAddress([franch.address, franch.name])}
                     >
                       {franch.name}
-                    </Text>
-                    <Text fontSize={12} fontWeight={400}>
+                    </Button>
+                    <Button
+                      variant={"link"}
+                      fontSize={12}
+                      fontWeight={400}
+                      onClick={() => setAddress([franch.address, franch.name])}
+                    >
                       {franch.address}
-                    </Text>
+                    </Button>
                     <VStack spacing={0} alignItems="flex-start">
                       <Text fontSize={12}>쉬는날: {franch.holiday}</Text>
                       <Text fontSize={12} fontStyle="italic">
