@@ -16,6 +16,13 @@ export async function blogList() {
     response.json()
   );
 }
+export async function blogDetail(id: any) {
+  const postId = id.queryKey[1];
+  console.log("안녕", postId);
+  return await fetch(`${BASE_PATH}/api/v1/blog/${postId}`).then((response) =>
+    response.json()
+  );
+}
 
 export async function bestSeller() {
   return await fetch(`${BASE_PATH}/api/v1/bestseller`).then((response) =>
@@ -98,7 +105,6 @@ export async function eBook() {
 }
 
 export async function search(term: any) {
-  console.log("API Term", term.queryKey[1]);
   return await fetch(
     `${BASE_PATH}/api/v1/search?term=${term.queryKey[1]}`
   ).then((response) => response.json());

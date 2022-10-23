@@ -341,6 +341,7 @@ export default function Home() {
                     title={data.title}
                     content={data.content}
                     published={data.published}
+                    id={data.id}
                     key={index}
                   />
                 ))}

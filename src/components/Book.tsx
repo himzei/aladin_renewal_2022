@@ -29,7 +29,7 @@ export default function Book({
       <Link to={`/book/${isbn}`}>
         <GridItem>
           <Box as={motion.div}>
-            <VStack position="relative" _hover={{ color: "#3D62AD" }}>
+            <VStack position="relative" role="group">
               <Box
                 w={"150px"}
                 h="230px"
@@ -38,7 +38,7 @@ export default function Book({
                 boxShadow="md"
               >
                 <Image
-                  _hover={{
+                  _groupHover={{
                     transform: "scale(1.1)",
                     transition: "0.4s",
                   }}
@@ -69,13 +69,27 @@ export default function Book({
                 <FaHeart color="crimson" fontSize={18} />
               </Badge>
               <VStack alignItems={"flex-start"} spacing={0} w="full">
-                <Text color={fontColor} fontSize={"md"} fontWeight={"bold"}>
+                <Text
+                  color={fontColor}
+                  fontSize={"md"}
+                  fontWeight={"bold"}
+                  _groupHover={{ color: "#3D62AD" }}
+                >
                   {title.substr(0, 11)}
                 </Text>
-                <Text letterSpacing={"-1px"} color={fontColor} fontSize={"xs"}>
+                <Text
+                  letterSpacing={"-1px"}
+                  color={fontColor}
+                  fontSize={"xs"}
+                  _groupHover={{ color: "#3D62AD" }}
+                >
                   {dateFormat(pubDate)}
                 </Text>
-                <Text color={fontColor} fontSize={"sm"}>
+                <Text
+                  color={fontColor}
+                  fontSize={"sm"}
+                  _groupHover={{ color: "#3D62AD" }}
+                >
                   {publisher.substr(0, 11)}
                 </Text>
               </VStack>
