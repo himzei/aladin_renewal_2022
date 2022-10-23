@@ -15,8 +15,6 @@ import {
   Input,
   InputAddon,
   InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
   keyframes,
   Select,
   Stack,
@@ -41,7 +39,6 @@ const spin = keyframes`
 
 export default function Consult() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const firstField = React.useRef();
   const prefersReducedMotion = usePrefersReducedMotion();
   const animation = prefersReducedMotion
     ? undefined
