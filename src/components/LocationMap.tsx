@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Badge,
   Box,
@@ -10,8 +10,14 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { motion } from "framer-motion";
+import styled from "styled-components";
+
+const MapContainer = styled.div`
+  /* aspect-ratio: 16 / 9; */
+  width: 100%;
+  height: 100%;
+`;
 
 interface IInfo {
   city: string;
@@ -442,11 +448,60 @@ export default function LocationMap() {
 
   const [clicked, setClicked] = useState(false);
   const [franches, setFranches] = useState<IInfo[]>([]);
+  const [address, setAddress] = useState("서울특별시 강남구 강남대로 152길 45");
   const getClicked = (city: string) => {
     setClicked(true);
     const result = cityFranch(city);
     setFranches(result);
   };
+
+  useEffect(() => {
+    const onLoadKakaoMap = () => {
+      window.kakao.maps.load(() => {
+        const geocoder = new window.kakao.maps.services.Geocoder(); // 주소-좌표 반환 객체를 생성
+        // 주소로 좌표를 검색
+        geocoder.addressSearch(address, (result: any, status: any) => {
+          if (status === window.kakao.maps.services.Status.OK) {
+            // 정상적으로 검색이 완료됐으면
+            var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+
+            // 지도를 생성
+            const container = document.querySelector(
+              "#mapKakao"
+            ) as HTMLElement;
+            const options = {
+              center: coords,
+              level: 3,
+            };
+            const map = new window.kakao.maps.Map(container, options);
+            // 결과값으로 받은 위치를 마커로 표시
+            new window.kakao.maps.Marker({
+              map: map,
+              position: coords,
+            });
+          }
+          // else {
+          //   // 정상적으로 좌표가 검색이 안 될 경우 디폴트 좌표로 검색
+          //   const container = document.getElementById("map") as HTMLElement;
+          //   const options = {
+          //     center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+          //     level: 3,
+          //   };
+          //   // 지도를 생성
+          //   const map = new window.kakao.maps.Map(container, options);
+          //   new window.kakao.maps.Marker({
+          //     map: map,
+          //     position: coords,
+          //   });
+          // }
+        });
+      });
+    };
+    onLoadKakaoMap();
+  }, [address]);
+
+  //
+
   return (
     <>
       <Text fontSize={20} fontWeight={600} w="6xl">
@@ -515,6 +570,7 @@ export default function LocationMap() {
                 spacing={8}
                 px={4}
                 w="full"
+                mb={8}
               >
                 <Button
                   as={"a"}
@@ -524,9 +580,18 @@ export default function LocationMap() {
                   fontWeight={600}
                   fontSize={16}
                 ></Button>
-                {franches.map((franch) => (
-                  <VStack spacing={1} alignItems="flex-start" w="full">
-                    <Text fontSize={16} fontWeight={600}>
+                {franches.map((franch, index) => (
+                  <VStack
+                    spacing={1}
+                    alignItems="flex-start"
+                    w="full"
+                    key={index}
+                  >
+                    <Text
+                      fontSize={16}
+                      fontWeight={600}
+                      onClick={() => setAddress(franch.address)}
+                    >
                       {franch.name}
                     </Text>
                     <Text fontSize={12} fontWeight={400}>
@@ -549,14 +614,7 @@ export default function LocationMap() {
             </VStack>
           </Box>
           <Box w="full" h="full" zIndex={1}>
-            <Map
-              center={{ lat: 33.5563, lng: 126.79581 }}
-              style={{ width: "100%", height: "100%" }}
-            >
-              <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
-                <div style={{ color: "#000" }}>Hello World!</div>
-              </MapMarker>
-            </Map>
+            <MapContainer id="mapKakao" />
           </Box>
         </HStack>
       </Box>
