@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Badge,
   Box,
@@ -447,6 +447,8 @@ const addressData: IInfo[] = [
 ];
 
 export default function LocationMap() {
+  const mapDetail = useRef<HTMLDivElement>(null);
+
   const newArr = addressData.map((i) => i.city);
   const cityArr = Array.from(new Set(newArr));
 
@@ -575,6 +577,7 @@ export default function LocationMap() {
           </VStack>
 
           <Box
+            ref={mapDetail}
             boxSizing={"border-box"}
             position="absolute"
             as={motion.div}
