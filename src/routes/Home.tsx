@@ -351,7 +351,7 @@ export default function Home() {
         </Box>
 
         {/* 신간 전체 리스트 */}
-        <VStack w="6xl" alignItems={"flex-start"} spacing={6}>
+        <VStack alignItems={"flex-start"} spacing={6}>
           <Text fontSize={20} fontWeight={600}>
             신간 전체 리스트
           </Text>

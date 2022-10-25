@@ -12,7 +12,11 @@ interface ITerm {
   term: string;
 }
 
-export default function SearchForm() {
+interface IProp {
+  isMenu?: boolean;
+}
+
+export default function SearchForm({ isMenu }: IProp) {
   const { handleSubmit, register } = useForm<ITerm>();
   let navigate = useNavigate();
 
@@ -21,7 +25,7 @@ export default function SearchForm() {
   };
   return (
     <Box as="form" w="full" onSubmit={handleSubmit(onSubmit)}>
-      <InputGroup size="lg">
+      <InputGroup size={isMenu ? "md" : "lg"}>
         <Input
           color={"gray.600"}
           px="2rem"
@@ -33,9 +37,10 @@ export default function SearchForm() {
         />
         <InputRightElement width="7rem">
           <Button
+            color={"white"}
             type="submit"
             px={10}
-            size="lg"
+            size={isMenu ? "md" : "lg"}
             bgGradient="linear(to-r, #0093e9 0%, #192699 99%)"
             rounded="3xl"
             _hover={{ bg: "blue.600" }}

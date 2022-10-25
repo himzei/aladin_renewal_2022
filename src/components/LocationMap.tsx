@@ -635,8 +635,10 @@ export default function LocationMap() {
                   <VStack
                     spacing={1}
                     alignItems="flex-start"
-                    w="full"
                     key={index}
+                    wordBreak="break-all"
+                    w="240px"
+                    overflowWrap="break-word"
                   >
                     <Button
                       variant={"link"}
@@ -651,6 +653,7 @@ export default function LocationMap() {
                       fontSize={12}
                       fontWeight={400}
                       onClick={() => setAddress([franch.address, franch.name])}
+                      overflow-wrap="normal"
                     >
                       {franch.address}
                     </Button>
