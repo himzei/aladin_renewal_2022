@@ -1,4 +1,4 @@
-import { Box, Divider, HStack, Text } from "@chakra-ui/react";
+import { Box, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import { SiKakaotalk, SiNaver, SiGithub } from "react-icons/si";
 import { BsGoogle } from "react-icons/bs";
 
@@ -28,26 +28,74 @@ export default function SocialLogin({ btnText }: SocialLoginProps) {
         </Text>
         <Divider />
       </HStack>
-      <HStack
-        h="50px"
-        fontSize={"4xl"}
+
+      <VStack
+        fontSize={"3xl"}
         justifyContent="center"
         alignItems={"center"}
-        spacing={8}
+        spacing={2}
+        w="full"
       >
-        <Box as="a" href={finalUrl}>
-          <SiGithub />
-        </Box>
-        <Box as="a">
-          <SiKakaotalk color="#fcdc12" />
-        </Box>
-        <Box>
-          <SiNaver color="#20a534" />
-        </Box>
-        <Box>
-          <BsGoogle />
-        </Box>
-      </HStack>
+        <HStack w="full">
+          <HStack
+            spacing={3}
+            as="a"
+            href={finalUrl}
+            w="50%"
+            bg="black"
+            px={2}
+            py={1}
+            color="white"
+            rounded="md"
+          >
+            <SiGithub />
+            <Text fontSize={"md"}>Github {btnText}</Text>
+          </HStack>
+          <HStack
+            as="a"
+            w="50%"
+            bg="#FAE100"
+            px={2}
+            py={1}
+            spacing={3}
+            color="#371d1e"
+            rounded="md"
+          >
+            <SiKakaotalk />
+            <Text fontSize={"md"}>카카오톡 {btnText}</Text>
+          </HStack>
+        </HStack>
+        <HStack w="full">
+          <HStack
+            spacing={3}
+            as="a"
+            href={finalUrl}
+            w="50%"
+            bg="#03CF5D"
+            px={2}
+            py={1}
+            color="white"
+            rounded="md"
+          >
+            <SiNaver />
+            <Text fontSize={"md"}>네이버로 {btnText}</Text>
+          </HStack>
+          <HStack
+            spacing={3}
+            as="a"
+            href={finalUrl}
+            w="50%"
+            bg="red"
+            px={2}
+            py={1}
+            color="white"
+            rounded="md"
+          >
+            <BsGoogle />
+            <Text fontSize={"md"}>Google로 {btnText}</Text>
+          </HStack>
+        </HStack>
+      </VStack>
     </Box>
   );
 }

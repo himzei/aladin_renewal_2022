@@ -7,6 +7,7 @@ import {
   Heading,
   Text,
   Container,
+  VStack,
 } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
@@ -43,7 +44,7 @@ export default function BlogDetail() {
     ["blogDetail", id],
     blogDetail
   );
-  console.log("hello", data, isLoading);
+  console.log(data, isLoading);
   // As we have used custom buttons, we need a reference variable to
   // change the state
   const [slider, setSlider] = React.useState<Slider | null>(null);
@@ -77,86 +78,95 @@ export default function BlogDetail() {
   ];
 
   return (
-    <Box
-      position={"relative"}
-      height={"400px"}
-      width={"full"}
-      overflow={"hidden"}
-    >
-      {/* CSS files for react-slick */}
-      <link
-        rel="stylesheet"
-        type="text/css"
-        charSet="UTF-8"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-      />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-      />
-      {/* Left Icon */}
-      <IconButton
-        aria-label="left-arrow"
-        variant="ghost"
-        position="absolute"
-        left={side}
-        top={top}
-        transform={"translate(0%, -50%)"}
-        zIndex={2}
-        onClick={() => slider?.slickPrev()}
-        opacity="0.5"
+    <>
+      <Box
+        position={"relative"}
+        height={"400px"}
+        width={"full"}
+        overflow={"hidden"}
       >
-        <BiLeftArrowAlt size="30px" />
-      </IconButton>
-      {/* Right Icon */}
-      <IconButton
-        aria-label="right-arrow"
-        variant="ghost"
-        position="absolute"
-        right={side}
-        top={top}
-        transform={"translate(0%, -50%)"}
-        zIndex={2}
-        onClick={() => slider?.slickNext()}
-        opacity="0.5"
-      >
-        <BiRightArrowAlt size="30px" />
-      </IconButton>
-      {/* Slider */}
-      <Slider {...settings} ref={(slider) => setSlider(slider)}>
-        {cards.map((card, index) => (
-          <Box
-            key={index}
-            height={"5xl"}
-            position="relative"
-            backgroundPosition="center"
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-            backgroundImage={`url(${card.image})`}
-          >
-            {/* This is the block you need to change, to customize the caption */}
-            <Container size="container.lg" height="400px" position="relative">
-              <Stack
-                spacing={6}
-                w={"full"}
-                maxW={"lg"}
-                position="absolute"
-                top="60%"
-                left="-30%"
-                transform="translate(0, -50%)"
-              >
-                <Heading fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
-                  {card.title}
-                </Heading>
-                <Text fontSize={{ base: "md", lg: "lg" }} color="GrayText">
-                  {card.text}
-                </Text>
-              </Stack>
-            </Container>
-          </Box>
-        ))}
-      </Slider>
-    </Box>
+        {/* CSS files for react-slick */}
+        <link
+          rel="stylesheet"
+          type="text/css"
+          charSet="UTF-8"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+        />
+        {/* Left Icon */}
+        <IconButton
+          aria-label="left-arrow"
+          variant="ghost"
+          position="absolute"
+          left={side}
+          top={top}
+          transform={"translate(0%, -50%)"}
+          zIndex={2}
+          onClick={() => slider?.slickPrev()}
+          opacity="0.5"
+        >
+          <BiLeftArrowAlt size="30px" />
+        </IconButton>
+        {/* Right Icon */}
+        <IconButton
+          aria-label="right-arrow"
+          variant="ghost"
+          position="absolute"
+          right={side}
+          top={top}
+          transform={"translate(0%, -50%)"}
+          zIndex={2}
+          onClick={() => slider?.slickNext()}
+          opacity="0.5"
+        >
+          <BiRightArrowAlt size="30px" />
+        </IconButton>
+        {/* Slider */}
+        <Slider {...settings} ref={(slider) => setSlider(slider)}>
+          {cards.map((card, index) => (
+            <Box
+              key={index}
+              height={"5xl"}
+              position="relative"
+              backgroundPosition="center"
+              backgroundRepeat="no-repeat"
+              backgroundSize="cover"
+              backgroundImage={`url(${card.image})`}
+            >
+              {/* This is the block you need to change, to customize the caption */}
+              <Container size="container.lg" height="400px" position="relative">
+                <Stack
+                  spacing={6}
+                  w={"full"}
+                  maxW={"lg"}
+                  position="absolute"
+                  top="60%"
+                  left="-30%"
+                  transform="translate(0, -50%)"
+                >
+                  <Heading fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
+                    {card.title}
+                  </Heading>
+                  <Text fontSize={{ base: "md", lg: "lg" }} color="GrayText">
+                    {card.text}
+                  </Text>
+                </Stack>
+              </Container>
+            </Box>
+          ))}
+        </Slider>
+      </Box>
+      <VStack my={8} w="full" display={"flex"} justifyContent={"center"}>
+        <Box w="6xl">
+          {data?.map((hello) => (
+            <Text>{hello.content}</Text>
+          ))}
+        </Box>
+      </VStack>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   Badge,
   Box,
@@ -447,8 +447,6 @@ const addressData: IInfo[] = [
 ];
 
 export default function LocationMap() {
-  const mapDetail = useRef<HTMLDivElement>(null);
-
   const newArr = addressData.map((i) => i.city);
   const cityArr = Array.from(new Set(newArr));
 
@@ -456,6 +454,7 @@ export default function LocationMap() {
     addressData.filter((item) => item.city === city);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [clicked, setClicked] = useState(false);
   const [franches, setFranches] = useState<IInfo[]>([]);
   const [webPage, setWebPage] = useState("");
@@ -534,7 +533,24 @@ export default function LocationMap() {
     onLoadKakaoMap();
   }, [address]);
 
-  //
+  // const outSection = useRef() as React.MutableRefObject<HTMLDivElement>;
+  // console.log(outSection.current);
+  // console.log(clicked);
+
+  // window.addEventListener("click", (e) => {
+  //   if (clicked === true && e.target !== outSection.current)
+  //     console.log(e.target);
+  // });
+
+  // useEffect(() => {
+  //   const slideClose = (e: any) => {
+  //     console.log(e.target);
+  //     // if (clicked === true && outSection.current.contains(e.target)) {
+  //     //   console.log("hello");
+  //     // }
+  //   };
+  //   window.addEventListener("click", slideClose);
+  // }, []);
 
   return (
     <>
@@ -576,8 +592,8 @@ export default function LocationMap() {
             </Grid>
           </VStack>
 
+          {/* 지도 슬라이딩 되는 부분 */}
           <Box
-            ref={mapDetail}
             boxSizing={"border-box"}
             position="absolute"
             as={motion.div}
@@ -677,6 +693,7 @@ export default function LocationMap() {
               </VStack>
             </VStack>
           </Box>
+
           <Box w="full" h="full" zIndex={1}>
             <MapContainer id="mapKakao" />
           </Box>

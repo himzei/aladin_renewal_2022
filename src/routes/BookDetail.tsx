@@ -64,6 +64,7 @@ export default function BookDetail() {
     ["bookDetail", id],
     bookDetail
   );
+  console.log(data);
 
   return (
     <>

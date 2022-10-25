@@ -10,6 +10,7 @@ import { ILogInForm } from "./components/LoginModal";
 import { ISignUpForm } from "./components/SignUpModal";
 
 const BASE_PATH = "https://api-backend-2022.herokuapp.com";
+// const BASE_PATH = "http://localhost:4000";
 
 export async function blogList() {
   return await fetch(`${BASE_PATH}/api/v1/blogList`).then((response) =>
