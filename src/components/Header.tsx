@@ -99,6 +99,14 @@ export default function Header() {
             <SearchForm isMenu={true} />
           </Box>
           <HStack w={48} justifyContent="flex-end" pr={4}>
+            <IconButton
+              onClick={toggleColorMode}
+              variant="ghost"
+              aria-label="Toggle dark mode"
+              icon={
+                colorMode === "light" ? <BsFillSunFill /> : <BsFillMoonFill />
+              }
+            />
             <Menu>
               <MenuButton
                 px={4}
