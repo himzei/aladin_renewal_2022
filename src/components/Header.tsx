@@ -26,6 +26,7 @@ import Logo from "./Logo";
 import { useEffect, useState } from "react";
 import SearchForm from "./SearchForm";
 import { FiMenu } from "react-icons/fi";
+import { motion } from "framer-motion";
 
 export default function Header() {
   const [scrollY, setScrollY] = useState(0);
@@ -83,9 +84,11 @@ export default function Header() {
         // scroll 201 이상일 때
         // 헤더에 검색창 표시
         <HStack
+          as={motion.div}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           w={{ md: "70%", lg: "80%", xl: "90%", "2xl": "80%" }}
           justifyContent={"space-between"}
-          transition={"0.4s"}
         >
           <HStack spacing={6}>
             <Link to="/">
