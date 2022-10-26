@@ -38,7 +38,7 @@ export default function BlogMain({ title, content, published, id }: IProp) {
                 {content
                   .replace(`/</*[a-zA-Z0-9]>/`, "")
                   .replace(/&nbsp;/, "")
-                  .substr(0, 44)}
+                  .substr(0, 38)}
               </Text>
             </VStack>
             <Text _groupHover={{ color: "#3D62AD" }} fontSize={12}>

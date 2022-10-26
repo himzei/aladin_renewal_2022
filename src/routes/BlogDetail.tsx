@@ -8,6 +8,7 @@ import {
   Text,
   Container,
   VStack,
+  Divider,
 } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
@@ -40,11 +41,12 @@ interface IBlogDetail {
 
 export default function BlogDetail() {
   const { id } = useParams();
-  const { data, isLoading } = useQuery<IBlogDetail[]>(
+  const { data, isLoading } = useQuery<IBlogDetail>(
     ["blogDetail", id],
     blogDetail
   );
   console.log(data, isLoading);
+
   // As we have used custom buttons, we need a reference variable to
   // change the state
   const [slider, setSlider] = React.useState<Slider | null>(null);
@@ -76,7 +78,6 @@ export default function BlogDetail() {
         "https://images.unsplash.com/photo-1507237998874-b4d52d1dd655?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
     },
   ];
-
   return (
     <>
       <Box
@@ -162,9 +163,12 @@ export default function BlogDetail() {
       </Box>
       <VStack my={8} w="full" display={"flex"} justifyContent={"center"}>
         <Box w="6xl">
-          {data?.map((hello) => (
-            <Text>{hello.content}</Text>
-          ))}
+          <VStack spacing={2} alignItems="flex-start">
+            <Heading>{data?.title}</Heading>
+            <Text>{data?.published.substr(0, 10)}</Text>
+          </VStack>
+          <Divider py={4} />
+          <Box>{data?.content}</Box>
         </Box>
       </VStack>
     </>

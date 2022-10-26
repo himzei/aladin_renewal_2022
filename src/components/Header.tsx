@@ -80,13 +80,82 @@ export default function Header() {
       position="fixed"
       zIndex={99}
     >
-      {isMobile ? null : scrollY > 201 ? (
+      {isMobile ? (
+        // 모바일 일때 화면 구현
+        <HStack
+          as={motion.div}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          w={{ md: "70%", lg: "80%", xl: "90%" }}
+          justifyContent={"space-between"}
+        >
+          <HStack spacing={6}>
+            <Link to="/">
+              <Box mb={2}>
+                <Logo />
+                {/* <Image src={logoColor} alt="" w={32} /> */}
+              </Box>
+            </Link>
+          </HStack>
+          <HStack w={48} justifyContent="flex-end" pr={4}>
+            <IconButton
+              onClick={toggleColorMode}
+              variant="ghost"
+              aria-label="Toggle dark mode"
+              icon={
+                colorMode === "light" ? <BsFillSunFill /> : <BsFillMoonFill />
+              }
+            />
+            <Menu>
+              <MenuButton
+                px={4}
+                py={2}
+                transition="all 0.2s"
+                borderRadius="md"
+                borderWidth="1px"
+                _hover={{ bg: "gray.400" }}
+                _expanded={{ bg: "blue.400" }}
+                _focus={{ boxShadow: "outline" }}
+              >
+                <FiMenu size={20} />
+              </MenuButton>
+              <MenuList>
+                <Link to="/inbound">
+                  <MenuItem>국내도서</MenuItem>
+                </Link>
+                <Link to="/outbound">
+                  <MenuItem>외국도서</MenuItem>
+                </Link>
+                <Link to="/music">
+                  <MenuItem>음반</MenuItem>
+                </Link>
+                <Link to="/dvd">
+                  <MenuItem>DVD</MenuItem>
+                </Link>
+                <Link to="/used">
+                  <MenuItem>중고샵</MenuItem>
+                </Link>
+                <Link to="/ebook">
+                  <MenuItem>전자책</MenuItem>
+                </Link>
+                <MenuDivider />
+                <MenuItem onClick={onSignUpOpen}>회원가입</MenuItem>
+                <MenuItem onClick={onLoginOpen}>로그인</MenuItem>
+              </MenuList>
+            </Menu>
+          </HStack>
+          <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
+          <SignUpModal isOpen={isSignUpOpen} onClose={onSignUPClose} />
+        </HStack>
+      ) : scrollY > 201 ? (
         // scroll 201 이상일 때
         // 헤더에 검색창 표시
         <HStack
           as={motion.div}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           w={{ md: "70%", lg: "80%", xl: "90%", "2xl": "80%" }}
           justifyContent={"space-between"}
         >
