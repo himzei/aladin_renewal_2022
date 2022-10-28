@@ -533,25 +533,6 @@ export default function LocationMap() {
     onLoadKakaoMap();
   }, [address]);
 
-  // const outSection = useRef() as React.MutableRefObject<HTMLDivElement>;
-  // console.log(outSection.current);
-  // console.log(clicked);
-
-  // window.addEventListener("click", (e) => {
-  //   if (clicked === true && e.target !== outSection.current)
-  //     console.log(e.target);
-  // });
-
-  // useEffect(() => {
-  //   const slideClose = (e: any) => {
-  //     console.log(e.target);
-  //     // if (clicked === true && outSection.current.contains(e.target)) {
-  //     //   console.log("hello");
-  //     // }
-  //   };
-  //   window.addEventListener("click", slideClose);
-  // }, []);
-
   return (
     <>
       <Text fontSize={20} fontWeight={600} w="6xl">

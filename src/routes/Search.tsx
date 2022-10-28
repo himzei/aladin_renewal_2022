@@ -24,7 +24,7 @@ import BookSkeletonVertical from "../components/BookSkeletonVertical";
 
 export default function Search() {
   const { term } = useParams();
-  console.log("Search.tsx params", term);
+
   const { data, isLoading } = useQuery<IBookResult[]>(["search", term], search);
   return (
     <VStack mb={10} spacing={12}>

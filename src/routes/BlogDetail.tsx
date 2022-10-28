@@ -41,11 +41,7 @@ interface IBlogDetail {
 
 export default function BlogDetail() {
   const { id } = useParams();
-  const { data, isLoading } = useQuery<IBlogDetail>(
-    ["blogDetail", id],
-    blogDetail
-  );
-  console.log(data, isLoading);
+  const { data } = useQuery<IBlogDetail>(["blogDetail", id], blogDetail);
 
   // As we have used custom buttons, we need a reference variable to
   // change the state

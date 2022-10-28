@@ -25,7 +25,7 @@ export default function OutBound() {
     ["books", "outBound"],
     outBound
   );
-  console.log(data);
+
   return (
     <>
       <VStack spacing={10}>

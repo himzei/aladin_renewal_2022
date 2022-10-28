@@ -6,11 +6,18 @@
 // BlogBest : 블로거 베스트셀러 (국내도서만 조회 가능
 
 import { QueryFunctionContext } from "@tanstack/react-query";
+import axios from "axios";
 import { ILogInForm } from "./components/LoginModal";
 import { ISignUpForm } from "./components/SignUpModal";
 
-const BASE_PATH = "https://api-backend-2022.herokuapp.com";
-// const BASE_PATH = "http://localhost:4000";
+// const BASE_PATH = "https://api-backend-2022.herokuapp.com";
+const BASE_PATH = "http://localhost:4000";
+
+export async function refreshTokens() {
+  return await fetch(`${BASE_PATH}/users/test`).then((response) =>
+    response.json()
+  );
+}
 
 export async function blogList() {
   return await fetch(`${BASE_PATH}/api/v1/blogList`).then((response) =>
@@ -19,7 +26,7 @@ export async function blogList() {
 }
 export async function blogDetail(id: any) {
   const postId = id.queryKey[1];
-  console.log("안녕", postId);
+
   return await fetch(`${BASE_PATH}/api/v1/blog/${postId}`).then((response) =>
     response.json()
   );
@@ -117,7 +124,6 @@ export async function usernameSignUp({
   password,
   password2,
 }: ISignUpForm) {
-  console.log(username, email, password, password2);
   return await fetch(`${BASE_PATH}/users/signup`, {
     method: "POST",
     headers: {
@@ -132,12 +138,20 @@ export async function usernameSignUp({
   }).then((response) => response.json);
 }
 
+// export async function usernameLogIn({ username, password }: ILogInForm) {
+//   try {
+//     await axios.post(`${BASE_PATH}/users/login`, {
+//       username,
+//       password,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
 export async function usernameLogIn({ username, password }: ILogInForm) {
   return await fetch(`${BASE_PATH}/users/login`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify({
       username,
       password,

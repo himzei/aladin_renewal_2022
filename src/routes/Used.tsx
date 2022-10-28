@@ -22,7 +22,7 @@ import SearchForm from "../components/SearchForm";
 
 export default function Used() {
   const { data, isLoading } = useQuery<IBookResult[]>(["books", "used"], used);
-  console.log(data);
+
   return (
     <>
       <VStack spacing={10}>

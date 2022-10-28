@@ -25,7 +25,7 @@ export default function InBound() {
     ["books", "inBound"],
     inBound
   );
-  console.log(data);
+
   return (
     <>
       <VStack spacing={10}>

@@ -25,7 +25,7 @@ export default function Ebook() {
     ["books", "eBook"],
     eBook
   );
-  console.log(data);
+
   return (
     <>
       <VStack spacing={10}>

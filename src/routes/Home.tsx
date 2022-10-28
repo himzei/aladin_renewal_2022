@@ -61,10 +61,11 @@ export default function Home() {
     "linear(to-r, #060606, #404040 )"
   );
   const opacityColor = useColorModeValue("0.7", "0.8");
-  const { data: dataBlogList, isLoading: isLoadingBlogList } = useQuery<
-    IBlogResult[]
-  >(["blogList"], blogList);
-  console.log(isLoadingBlogList, dataBlogList);
+  const { data: dataBlogList } = useQuery<IBlogResult[]>(
+    ["blogList"],
+    blogList
+  );
+
   const { data: dataBestSeller, isLoading: isLoadingBestSeller } = useQuery<
     IBookResult[]
   >(["books", "Bestseller"], bestSeller);

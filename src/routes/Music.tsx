@@ -25,7 +25,7 @@ export default function Music() {
     ["books", "music"],
     music
   );
-  console.log(data);
+
   return (
     <>
       <VStack spacing={10}>
