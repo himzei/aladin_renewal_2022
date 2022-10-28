@@ -6,7 +6,7 @@
 // BlogBest : 블로거 베스트셀러 (국내도서만 조회 가능
 
 import { QueryFunctionContext } from "@tanstack/react-query";
-import axios from "axios";
+
 import { ILogInForm } from "./components/LoginModal";
 import { ISignUpForm } from "./components/SignUpModal";
 

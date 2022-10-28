@@ -15,7 +15,6 @@ import {
   useDisclosure,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
@@ -28,11 +27,6 @@ import { useEffect, useState } from "react";
 import SearchForm from "./SearchForm";
 import { FiMenu } from "react-icons/fi";
 import { motion } from "framer-motion";
-import { refreshTokens } from "../api";
-
-interface IToken {
-  accessToken: string;
-}
 
 export default function Header() {
   const [scrollY, setScrollY] = useState(0);
