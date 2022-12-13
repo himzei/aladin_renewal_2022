@@ -1,6 +1,8 @@
 import {
   Box,
   Grid,
+  HStack,
+  Spinner,
   Stack,
   Tab,
   TabList,
@@ -37,18 +39,17 @@ interface IBookResult {
 }
 
 export default function InBound() {
-  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery<
-    IBookResult[]
-  >({
-    queryKey: ["repositories"],
-    queryFn: ({ pageParam = 1 }) => inBound(pageParam),
-    getNextPageParam: () => {
-      const maxPages = 10;
-      const nextPage = 2;
+  const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery<IBookResult[]>({
+      queryKey: ["repositories"],
+      queryFn: ({ pageParam = 1 }) => inBound(pageParam),
+      getNextPageParam: () => {
+        const maxPages = 10;
+        const nextPage = 2;
 
-      return nextPage <= maxPages ? nextPage : undefined;
-    },
-  });
+        return nextPage <= maxPages ? nextPage : undefined;
+      },
+    });
 
   console.log(data);
 
@@ -152,6 +153,11 @@ export default function InBound() {
                     )}
                   </Grid>
                   {isLoading ? <BookSkeleton /> : null}
+                  {isFetchingNextPage ? (
+                    <HStack w={"full"} justifyContent="center" h={24}>
+                      <Spinner />
+                    </HStack>
+                  ) : null}
                 </VStack>
               </Stack>
             </TabPanel>
