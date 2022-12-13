@@ -26,7 +26,6 @@ import {
   blogBest,
   blogList,
   itemNewAll,
-  itemNewSpecial,
 } from "../api";
 import Book from "../components/Book";
 import BookSkeleton from "../components/BookSkeleton";
@@ -39,6 +38,8 @@ import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
+import SkewBox from "../components/SkewBox";
+import BookGrid from "../components/BookGrid";
 
 export interface IBookResult {
   author: string;
@@ -117,9 +118,6 @@ export default function Home() {
   const { data: dataItemNewAll, isLoading: isLoadingItemNewAll } = useQuery<
     IBookResult[]
   >(["books", "ItemNewAll"], itemNewAll);
-
-  const { data: dataItemNewSpecial, isLoading: isLoadingItemNewSpecial } =
-    useQuery<IBookResult[]>(["books", "ItemNewSpecial"], itemNewSpecial);
 
   const { data: dataBlogBest, isLoading: isLoadingBlogBest } = useQuery<
     IBookResult[]
@@ -219,7 +217,7 @@ export default function Home() {
         </VStack>
       </VStack>
 
-      <VStack spacing={20}>
+      <VStack spacing={16}>
         {/* 베스트셀러 */}
         <VStack alignItems={"flex-start"}>
           <Text color={textColor} fontSize={20} fontWeight={600} ml={4} mb={-4}>
@@ -293,13 +291,31 @@ export default function Home() {
           </Tabs>
         </VStack>
 
-        {/* 블로거 베스트셀러 */}
-        <VStack spacing={6} w="6xl" alignItems="flex-start">
-          <Text fontSize={20} fontWeight={600} color={textColor}>
-            블로거 베스트셀러
-          </Text>
+        <VStack w="full">
+          <SkewBox
+            title="블로거 베스트셀러"
+            description="인터넷에서 판매되는 상품중 블로거 추천이 가장 많이 된 순위입니다."
+            imgUrl="https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+          />
+        </VStack>
 
-          <Box w="full" height="300px">
+        {/* 블로거 베스트셀러 */}
+        <VStack
+          spacing={6}
+          position="relative"
+          w="full"
+          h="240px"
+          alignItems={"center"}
+        >
+          <Box
+            w="6xl"
+            position="absolute"
+            top={-40}
+            bg="white"
+            py={8}
+            px={2}
+            alignItems="center"
+          >
             {isLoadingBlogBest ? <BookSkeleton /> : null}
             <Slider {...settingsBestSeller}>
               {dataBlogBest?.map((data, index) => (
@@ -313,6 +329,49 @@ export default function Home() {
                   publisher={data.publisher}
                   isbn={data.isbn}
                   fontColor={textColor}
+                />
+              ))}
+            </Slider>
+          </Box>
+        </VStack>
+
+        <VStack w="full">
+          <SkewBox
+            title="신간 전체 리스트"
+            description="“이 주에 새롭게 등록된 신상품 중 MD가 추천하는 리스트입니다."
+            imgUrl="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+          />
+        </VStack>
+
+        {/* 신간 전체 리스트 */}
+        <VStack
+          spacing={6}
+          position="relative"
+          w="full"
+          h="240px"
+          alignItems={"center"}
+        >
+          <Box
+            w="6xl"
+            position="absolute"
+            top={-40}
+            bg="white"
+            py={8}
+            px={2}
+            alignItems="center"
+          >
+            {isLoadingItemNewAll ? <BookSkeleton /> : null}
+            <Slider {...settingsBestSeller}>
+              {dataItemNewAll?.map((data, index) => (
+                <Book
+                  key={index}
+                  description={data.description}
+                  cover={data.cover}
+                  title={data.title}
+                  priceSales={data.priceSales}
+                  pubDate={data.pubDate}
+                  publisher={data.publisher}
+                  isbn={data.isbn}
                 />
               ))}
             </Slider>
@@ -383,53 +442,9 @@ export default function Home() {
           </Grid>
         </Box>
 
-        {/* 신간 전체 리스트 */}
-        <VStack alignItems={"flex-start"} spacing={6}>
-          <Text fontSize={20} fontWeight={600}>
-            신간 전체 리스트
-          </Text>
-          <Box w="6xl">
-            {isLoadingItemNewAll ? <BookSkeleton /> : null}
-            <Slider {...settingsBestSeller}>
-              {dataItemNewAll?.map((data, index) => (
-                <Book
-                  key={index}
-                  description={data.description}
-                  cover={data.cover}
-                  title={data.title}
-                  priceSales={data.priceSales}
-                  pubDate={data.pubDate}
-                  publisher={data.publisher}
-                  isbn={data.isbn}
-                />
-              ))}
-            </Slider>
-          </Box>
-        </VStack>
-
         {/* 주목할 만한 신간 리스트 */}
         <VStack alignItems={"flex-start"} spacing={6}>
-          <Text color={textColor} fontSize={20} fontWeight={600}>
-            주목할 만한 신간 리스트
-          </Text>
-          <Box w="6xl">
-            {isLoadingItemNewSpecial ? <BookSkeleton /> : null}
-            <Slider {...settingsBestSeller}>
-              {dataItemNewSpecial?.map((data, index) => (
-                <Book
-                  key={index}
-                  description={data.description}
-                  cover={data.cover}
-                  title={data.title}
-                  priceSales={data.priceSales}
-                  pubDate={data.pubDate}
-                  publisher={data.publisher}
-                  isbn={data.isbn}
-                  fontColor={textColor}
-                />
-              ))}
-            </Slider>
-          </Box>
+          <BookGrid numContents={12} wSize={"6xl"} />
         </VStack>
 
         {/* 중고매장 위치 */}

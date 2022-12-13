@@ -70,10 +70,12 @@ export async function itemNewAll() {
   );
 }
 
-export async function itemNewSpecial() {
-  return await fetch(`${BASE_PATH}/api/v1/itemNewSpecial`).then((response) =>
-    response.json()
-  );
+export async function itemNewSpecial(params: any) {
+  const [page, limit] = params.queryKey;
+  console.log(page, limit);
+  return await fetch(
+    `${BASE_PATH}/api/v1/itemNewSpecial?page=${page}&limit=${limit}`
+  ).then((response) => response.json());
 }
 
 export async function itemEditorChoice() {

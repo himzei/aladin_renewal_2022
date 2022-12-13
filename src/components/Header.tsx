@@ -25,28 +25,35 @@ import { MdOutlineRememberMe } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
 import Logo from "./Logo";
 import { useEffect, useState } from "react";
-import SearchForm from "./SearchForm";
 import { FiMenu } from "react-icons/fi";
 import { motion } from "framer-motion";
 import useUser from "../lib/useUser";
 import { logOut } from "../api";
 
 export default function Header() {
+  const [scroll, setScroll] = useState(false);
   const { userLoading, user } = useUser();
 
-  const [scrollY, setScrollY] = useState(0);
-  const handleFollow = () => {
-    setScrollY(window.pageYOffset);
-  };
+  // const [scrollY, setScrollY] = useState(0);
+  // const handleFollow = () => {
+  //   setScrollY(window.pageYOffset);
+  // };
 
   useEffect(() => {
-    const watch = () => {
-      window.addEventListener("scroll", handleFollow);
-    };
-    watch();
-    return () => {
-      window.removeEventListener("scroll", handleFollow);
-    };
+    document.addEventListener("wheel", (event) => {
+      if (event.deltaY < 0) {
+        setScroll(true);
+      } else if (event.deltaY > 0) {
+        setScroll(false);
+      }
+    });
+    // const watch = () => {
+    //   window.addEventListener("scroll", handleFollow);
+    // };
+    // watch();
+    // return () => {
+    //   window.removeEventListener("scroll", handleFollow);
+    // };
   });
 
   // const { data } = useQuery<IToken>(["refreshToken"], refreshTokens);
@@ -74,6 +81,8 @@ export default function Header() {
 
   return (
     <Stack
+      transform={scroll ? "translateY(0px)" : "translateY(-60px)"}
+      transition="0.4s"
       w="100%"
       h="60px"
       color="#0d243f"
@@ -155,89 +164,6 @@ export default function Header() {
                   ) : (
                     <>
                       <MenuItem>{user.username} 님</MenuItem>
-                      <MenuItem onClick={logOut}>로그아웃</MenuItem>
-                    </>
-                  )
-                ) : null}
-              </MenuList>
-            </Menu>
-          </HStack>
-          <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
-          <SignUpModal isOpen={isSignUpOpen} onClose={onSignUPClose} />
-        </HStack>
-      ) : scrollY > 201 ? (
-        // scroll 201 이상일 때
-        // 헤더에 검색창 표시
-        <HStack
-          as={motion.div}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          w={{ md: "70%", lg: "80%", xl: "90%", "2xl": "80%" }}
-          justifyContent={"space-between"}
-        >
-          <HStack spacing={6}>
-            <Link to="/">
-              <Box mb={2}>
-                <Logo />
-                {/* <Image src={logoColor} alt="" w={32} /> */}
-              </Box>
-            </Link>
-          </HStack>
-          <Box w="xl">
-            <SearchForm isMenu={true} />
-          </Box>
-          <HStack w={48} justifyContent="flex-end" pr={4}>
-            <IconButton
-              onClick={toggleColorMode}
-              variant="ghost"
-              aria-label="Toggle dark mode"
-              icon={
-                colorMode === "light" ? <BsFillSunFill /> : <BsFillMoonFill />
-              }
-            />
-            <Menu>
-              <MenuButton
-                px={4}
-                py={2}
-                transition="all 0.2s"
-                borderRadius="md"
-                borderWidth="1px"
-                _hover={{ bg: "gray.400" }}
-                _expanded={{ bg: "blue.400" }}
-                _focus={{ boxShadow: "outline" }}
-              >
-                <FiMenu size={20} />
-              </MenuButton>
-              <MenuList>
-                <Link to="/inbound">
-                  <MenuItem>국내도서</MenuItem>
-                </Link>
-                <Link to="/outbound">
-                  <MenuItem>외국도서</MenuItem>
-                </Link>
-                <Link to="/music">
-                  <MenuItem>음반</MenuItem>
-                </Link>
-                <Link to="/dvd">
-                  <MenuItem>DVD</MenuItem>
-                </Link>
-                <Link to="/used">
-                  <MenuItem>중고샵</MenuItem>
-                </Link>
-                <Link to="/ebook">
-                  <MenuItem>전자책</MenuItem>
-                </Link>
-                <MenuDivider />
-                {!userLoading ? (
-                  !user.username ? (
-                    <>
-                      <MenuItem onClick={onSignUpOpen}>회원가입</MenuItem>
-                      <MenuItem onClick={onLoginOpen}>로그인</MenuItem>
-                    </>
-                  ) : (
-                    <>
-                      <MenuItem>프로필</MenuItem>
                       <MenuItem onClick={logOut}>로그아웃</MenuItem>
                     </>
                   )

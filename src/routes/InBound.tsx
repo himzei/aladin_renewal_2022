@@ -42,7 +42,7 @@ export default function InBound() {
   >({
     queryKey: ["repositories"],
     queryFn: ({ pageParam = 1 }) => inBound(pageParam),
-    getNextPageParam: (allPages) => {
+    getNextPageParam: () => {
       const maxPages = 10;
       const nextPage = 2;
 
@@ -136,7 +136,6 @@ export default function InBound() {
                     rowGap={10}
                     gridAutoFlow="row dense"
                   >
-                    {isLoading ? <BookSkeleton /> : null}
                     {data?.pages.map((page) =>
                       page.map((item) => (
                         <Book
@@ -152,6 +151,7 @@ export default function InBound() {
                       ))
                     )}
                   </Grid>
+                  {isLoading ? <BookSkeleton /> : null}
                 </VStack>
               </Stack>
             </TabPanel>
