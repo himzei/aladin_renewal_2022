@@ -35,8 +35,8 @@ export default function BookGrid({ wSize }: IProps) {
   };
   return (
     <VStack
-      pt={32}
-      pb={16}
+      pt={8}
+      pb={8}
       textTransform={"uppercase"}
       display="flex"
       justifyContent={"center"}
@@ -54,7 +54,12 @@ export default function BookGrid({ wSize }: IProps) {
             transform={"translate(-30px) rotate(45deg)"}
           />
           <Box position={"absolute"} top="7px">
-            <Text textTransform={"uppercase"} fontSize={24} fontWeight="600">
+            <Text
+              textTransform={"uppercase"}
+              fontSize={24}
+              fontWeight="600"
+              bg="white"
+            >
               주목할 만한 신간리스트
             </Text>
           </Box>

@@ -220,9 +220,27 @@ export default function Home() {
       <VStack spacing={16}>
         {/* 베스트셀러 */}
         <VStack alignItems={"flex-start"}>
-          <Text color={textColor} fontSize={20} fontWeight={600} ml={4} mb={-4}>
-            베스트셀러
-          </Text>
+          <Box position="relative" overflow="hidden" w="250px" h="50px">
+            <Box
+              position="absolute"
+              top="15px"
+              left="40px"
+              w="100px"
+              h="100px"
+              borderLeft={"5px solid red"}
+              transform={"translate(-30px) rotate(45deg)"}
+            />
+            <Box position={"absolute"} top="7px">
+              <Text
+                textTransform={"uppercase"}
+                fontSize={24}
+                fontWeight="600"
+                bg="white"
+              >
+                베스트셀러
+              </Text>
+            </Box>
+          </Box>
           <Tabs align="end" variant="enclosed">
             <TabList>
               <Tab>이번달</Tab>
@@ -443,7 +461,7 @@ export default function Home() {
         </Box>
 
         {/* 주목할 만한 신간 리스트 */}
-        <VStack alignItems={"flex-start"} spacing={6}>
+        <VStack alignItems={"flex-start"}>
           <BookGrid numContents={12} wSize={"6xl"} />
         </VStack>
 
