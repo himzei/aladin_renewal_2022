@@ -111,7 +111,7 @@ export default function BookList({
 
               {priceSales === priceStandard ? null : (
                 <HStack>
-                  <Text>(정가</Text>
+                  <Text>(정가)</Text>
                   <Text decoration={"line-through"}>
                     {priceFormat(priceStandard)}
                   </Text>

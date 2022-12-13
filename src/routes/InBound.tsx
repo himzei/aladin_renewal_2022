@@ -10,21 +10,77 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { IBookResult } from "./Home";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { inBound } from "../api";
 import Book from "../components/Book";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaListUl } from "react-icons/fa";
-import BookList from "../components/BookList";
 import BookSkeleton from "../components/BookSkeleton";
 import SearchForm from "../components/SearchForm";
+import { useEffect } from "react";
+import BookList from "../components/BookList";
+
+interface IBookResult {
+  author: string;
+  categoryName: string;
+  cover: string;
+  description: string;
+  itemId: number;
+  link: string;
+  priceSales: number;
+  priceStandard: number;
+  pubDate: string;
+  publisher: string;
+  title: string;
+  isbn: string;
+  bestRank: number;
+}
 
 export default function InBound() {
-  const { data, isLoading } = useQuery<IBookResult[]>(
-    ["books", "inBound"],
-    inBound
-  );
+  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery<
+    IBookResult[]
+  >({
+    queryKey: ["repositories"],
+    queryFn: ({ pageParam = 1 }) => inBound(pageParam),
+    getNextPageParam: (allPages) => {
+      const maxPages = 10;
+      const nextPage = 2;
+
+      return nextPage <= maxPages ? nextPage : undefined;
+    },
+  });
+
+  console.log(data);
+
+  useEffect(() => {
+    let fetching = false;
+
+    const handleScroll = async (event: any) => {
+      // scrollTop 이미 스크롤 되어 보이지 않는 구간의 높이
+      // const scrollTop = document.documentElement.scrollTop;
+      // scrollHeight 화면에 보이지 않는 높이도 포함된 페이지의 총 높이
+      // const scrollHeight = document.documentElement.scrollHeight;
+      // clientHeight 클라이언트 즉 사용자에게 보여지는 높이
+      // const clientHeight = document.documentElement.clientHeight;
+
+      const { scrollTop, scrollHeight, clientHeight } =
+        event.target.scrollingElement;
+
+      if (!fetching && scrollHeight - scrollTop <= clientHeight * 2) {
+        fetching = true;
+        console.log(hasNextPage);
+
+        if (hasNextPage) await fetchNextPage();
+
+        fetching = false;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [hasNextPage, fetchNextPage]);
 
   return (
     <>
@@ -81,17 +137,20 @@ export default function InBound() {
                     gridAutoFlow="row dense"
                   >
                     {isLoading ? <BookSkeleton /> : null}
-                    {data?.map((data, index) => (
-                      <Book
-                        key={index}
-                        cover={data.cover}
-                        title={data.title}
-                        priceSales={data.priceSales}
-                        pubDate={data.pubDate}
-                        publisher={data.publisher}
-                        isbn={data.isbn}
-                      />
-                    ))}
+                    {data?.pages.map((page) =>
+                      page.map((item) => (
+                        <Book
+                          key={item.isbn}
+                          description={item.description}
+                          cover={item.cover}
+                          title={item.title}
+                          priceSales={item.priceSales}
+                          pubDate={item.pubDate}
+                          publisher={item.publisher}
+                          isbn={item.isbn}
+                        />
+                      ))
+                    )}
                   </Grid>
                 </VStack>
               </Stack>
@@ -99,21 +158,23 @@ export default function InBound() {
             <TabPanel>
               <Stack w="6xl">
                 <VStack spacing={4} alignItems="flex-start">
-                  {data?.map((data, index) => (
-                    <BookList
-                      key={index}
-                      cover={data.cover}
-                      title={data.title}
-                      priceSales={data.priceSales}
-                      pubDate={data.pubDate}
-                      publisher={data.publisher}
-                      isbn={data.isbn}
-                      categoryName={data.categoryName}
-                      author={data.author}
-                      description={data.description}
-                      priceStandard={data.priceStandard}
-                    />
-                  ))}
+                  {data?.pages.map((page) =>
+                    page.map((data, index) => (
+                      <BookList
+                        key={index}
+                        cover={data.cover}
+                        title={data.title}
+                        priceSales={data.priceSales}
+                        pubDate={data.pubDate}
+                        publisher={data.publisher}
+                        isbn={data.isbn}
+                        categoryName={data.categoryName}
+                        author={data.author}
+                        description={data.description}
+                        priceStandard={data.priceStandard}
+                      />
+                    ))
+                  )}
                 </VStack>
               </Stack>
             </TabPanel>

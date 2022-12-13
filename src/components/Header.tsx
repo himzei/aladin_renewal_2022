@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   HStack,
@@ -27,8 +28,12 @@ import { useEffect, useState } from "react";
 import SearchForm from "./SearchForm";
 import { FiMenu } from "react-icons/fi";
 import { motion } from "framer-motion";
+import useUser from "../lib/useUser";
+import { logOut } from "../api";
 
 export default function Header() {
+  const { userLoading, user } = useUser();
+
   const [scrollY, setScrollY] = useState(0);
   const handleFollow = () => {
     setScrollY(window.pageYOffset);
@@ -141,8 +146,19 @@ export default function Header() {
                   <MenuItem>전자책</MenuItem>
                 </Link>
                 <MenuDivider />
-                <MenuItem onClick={onSignUpOpen}>회원가입</MenuItem>
-                <MenuItem onClick={onLoginOpen}>로그인</MenuItem>
+                {!userLoading ? (
+                  !user.username ? (
+                    <>
+                      <MenuItem onClick={onSignUpOpen}>회원가입</MenuItem>
+                      <MenuItem onClick={onLoginOpen}>로그인</MenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <MenuItem>{user.username} 님</MenuItem>
+                      <MenuItem onClick={logOut}>로그아웃</MenuItem>
+                    </>
+                  )
+                ) : null}
               </MenuList>
             </Menu>
           </HStack>
@@ -213,8 +229,19 @@ export default function Header() {
                   <MenuItem>전자책</MenuItem>
                 </Link>
                 <MenuDivider />
-                <MenuItem onClick={onSignUpOpen}>회원가입</MenuItem>
-                <MenuItem onClick={onLoginOpen}>로그인</MenuItem>
+                {!userLoading ? (
+                  !user.username ? (
+                    <>
+                      <MenuItem onClick={onSignUpOpen}>회원가입</MenuItem>
+                      <MenuItem onClick={onLoginOpen}>로그인</MenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <MenuItem>프로필</MenuItem>
+                      <MenuItem onClick={logOut}>로그아웃</MenuItem>
+                    </>
+                  )
+                ) : null}
               </MenuList>
             </Menu>
           </HStack>
@@ -277,28 +304,42 @@ export default function Header() {
               }
             />
 
-            <Button
-              leftIcon={<MdOutlineRememberMe />}
-              colorScheme="blue"
-              variant="solid"
-              onClick={onSignUpOpen}
-              fontSize="xs"
-              height={7}
-              width={24}
-            >
-              회원가입
-            </Button>
-            <Button
-              leftIcon={<FaSignInAlt />}
-              colorScheme="blue"
-              variant="outline"
-              onClick={onLoginOpen}
-              fontSize="xs"
-              height={7}
-              width={24}
-            >
-              로그인
-            </Button>
+            {!userLoading ? (
+              !user.username ? (
+                <>
+                  <Button
+                    leftIcon={<MdOutlineRememberMe />}
+                    colorScheme="blue"
+                    variant="solid"
+                    onClick={onSignUpOpen}
+                    fontSize="xs"
+                    height={7}
+                    width={24}
+                  >
+                    회원가입
+                  </Button>
+                  <Button
+                    leftIcon={<FaSignInAlt />}
+                    colorScheme="blue"
+                    variant="outline"
+                    onClick={onLoginOpen}
+                    fontSize="xs"
+                    height={7}
+                    width={24}
+                  >
+                    로그인
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <HStack spacing={4}>
+                    <Avatar w={10} h={10} />
+                    <Text>{user.username} 님 반가워요</Text>
+                    <Button onClick={logOut}>로그아웃</Button>
+                  </HStack>
+                </>
+              )
+            ) : null}
           </HStack>
           <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
           <SignUpModal isOpen={isSignUpOpen} onClose={onSignUPClose} />

@@ -1,3 +1,6 @@
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./slick.css";
 import {
   Box,
   Button,
@@ -15,6 +18,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import Slider from "react-slick";
 import {
   bestSeller,
   bestSellerMonth,
@@ -30,6 +34,11 @@ import SearchForm from "../components/SearchForm";
 import LocationMap from "../components/LocationMap";
 import BlogMain from "../components/BlogMain";
 import Consult from "../components/Consult";
+import styled from "styled-components";
+import {
+  MdOutlineArrowBackIosNew,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
 
 export interface IBookResult {
   author: string;
@@ -54,6 +63,33 @@ export interface IBlogResult {
   url: string;
 }
 
+const Div = styled.div`
+  transform: translateY(-50px);
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: -26px;
+  z-index: 99;
+  text-align: right;
+  line-height: 30px;
+  &:before {
+    color: black;
+  }
+`;
+const DivPre = styled.div`
+  transform: translateY(-50px);
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: -26px;
+  z-index: 99;
+  text-align: left;
+  line-height: 30px;
+  &:before {
+    color: black;
+  }
+`;
+
 export default function Home() {
   const textColor = useColorModeValue("gray.700", "white");
   const gradientColor = useColorModeValue(
@@ -69,6 +105,8 @@ export default function Home() {
   const { data: dataBestSeller, isLoading: isLoadingBestSeller } = useQuery<
     IBookResult[]
   >(["books", "Bestseller"], bestSeller);
+
+  console.log(dataBestSeller);
 
   const { data: dataBestSellerMonth, isLoading: isLoadingBestSellerMonth } =
     useQuery<IBookResult[]>(["books", "BestsellerMonth"], bestSellerMonth);
@@ -87,20 +125,49 @@ export default function Home() {
     IBookResult[]
   >(["books", "BlogBest"], blogBest);
 
-  // framer Motion
+  const settingsBestSeller = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 7000,
+    speed: 500,
+    slidesToShow: 7,
+    slidesToScroll: 7,
+    autoPlay: true,
+    swipeToSlide: true,
+    nextArrow: (
+      <Div>
+        <MdOutlineArrowForwardIos />
+      </Div>
+    ),
+    prevArrow: (
+      <DivPre>
+        <MdOutlineArrowBackIosNew />
+      </DivPre>
+    ),
+    appendDots: (dots: any) => (
+      <div
+        style={{
+          width: "100%",
+          position: "absolute",
+
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ul> {dots} </ul>
+      </div>
+    ),
+    dotsClass: "dots_custom",
+  };
 
   return (
     <VStack spacing={10} mb={16}>
       <VStack
         position={"relative"}
         h="350px"
-        minWidth={{
-          sm: "500px",
-          md: "700px",
-          lg: "900px",
-          xl: "1100px",
-          "2xl": "1300px",
-        }}
+        w="8xl"
         justifyContent="center"
         color="white"
         backgroundImage={
@@ -152,7 +219,7 @@ export default function Home() {
         </VStack>
       </VStack>
 
-      <VStack spacing={10}>
+      <VStack spacing={20}>
         {/* 베스트셀러 */}
         <VStack alignItems={"flex-start"}>
           <Text color={textColor} fontSize={20} fontWeight={600} ml={4} mb={-4}>
@@ -165,126 +232,91 @@ export default function Home() {
               <Tab>지난해</Tab>
             </TabList>
             <TabPanels>
-              <TabPanel>
-                <Grid
-                  height="300px"
-                  overflow={"hidden"}
-                  templateColumns={{
-                    sm: "repeat(2, 1fr)",
-                    md: "repeat(4, 1fr)",
-                    lg: "repeat(5, 1fr)",
-                    xl: "repeat(6, 1fr)",
-                    "2xl": "repeat(7, 1fr)",
-                  }}
-                  gap={4}
-                  gridAutoFlow="row dense"
-                >
+              <TabPanel textAlign={"left"}>
+                <Box w="6xl">
                   {isLoadingBestSeller ? <BookSkeleton /> : null}
-                  {dataBestSeller?.map((data, index) => (
-                    <Book
-                      key={index}
-                      cover={data.cover}
-                      title={data.title}
-                      priceSales={data.priceSales}
-                      pubDate={data.pubDate}
-                      publisher={data.publisher}
-                      isbn={data.isbn}
-                    />
-                  ))}
-                </Grid>
+                  <Slider {...settingsBestSeller}>
+                    {dataBestSeller?.map((data, index) => (
+                      <Book
+                        key={index}
+                        description={data.description}
+                        cover={data.cover}
+                        title={data.title}
+                        priceSales={data.priceSales}
+                        pubDate={data.pubDate}
+                        publisher={data.publisher}
+                        isbn={data.isbn}
+                      />
+                    ))}
+                  </Slider>
+                </Box>
               </TabPanel>
-              <TabPanel>
-                <Grid
-                  height="300px"
-                  overflow={"hidden"}
-                  templateColumns={{
-                    sm: "repeat(2, 1fr)",
-                    md: "repeat(4, 1fr)",
-                    lg: "repeat(5, 1fr)",
-                    xl: "repeat(6, 1fr)",
-                    "2xl": "repeat(7, 1fr)",
-                  }}
-                  gap={4}
-                  gridAutoFlow="row dense"
-                >
+              <TabPanel textAlign={"left"}>
+                <Box w="6xl">
                   {isLoadingBestSellerMonth ? <BookSkeleton /> : null}
-                  {dataBestSellerMonth?.map((data, index) => (
-                    <Book
-                      key={index}
-                      cover={data.cover}
-                      title={data.title}
-                      priceSales={data.priceSales}
-                      pubDate={data.pubDate}
-                      publisher={data.publisher}
-                      isbn={data.isbn}
-                    />
-                  ))}
-                </Grid>
+                  <Slider {...settingsBestSeller}>
+                    {dataBestSellerMonth?.map((data, index) => (
+                      <Book
+                        key={index}
+                        description={data.description}
+                        cover={data.cover}
+                        title={data.title}
+                        priceSales={data.priceSales}
+                        pubDate={data.pubDate}
+                        publisher={data.publisher}
+                        isbn={data.isbn}
+                      />
+                    ))}
+                  </Slider>
+                </Box>
               </TabPanel>
-              <TabPanel>
-                <Grid
-                  height="300px"
-                  overflow={"hidden"}
-                  templateColumns={{
-                    sm: "repeat(2, 1fr)",
-                    md: "repeat(4, 1fr)",
-                    lg: "repeat(5, 1fr)",
-                    xl: "repeat(6, 1fr)",
-                    "2xl": "repeat(7, 1fr)",
-                  }}
-                  gap={4}
-                  gridAutoFlow="row dense"
-                >
+              <TabPanel textAlign={"left"}>
+                <Box w="6xl">
                   {isLoadingBestSellerYear ? <BookSkeleton /> : null}
-                  {dataBestSellerYear?.map((data, index) => (
-                    <Book
-                      key={index}
-                      cover={data.cover}
-                      title={data.title}
-                      priceSales={data.priceSales}
-                      pubDate={data.pubDate}
-                      publisher={data.publisher}
-                      isbn={data.isbn}
-                    />
-                  ))}
-                </Grid>
+                  <Slider {...settingsBestSeller}>
+                    {dataBestSellerYear?.map((data, index) => (
+                      <Book
+                        key={index}
+                        description={data.description}
+                        cover={data.cover}
+                        title={data.title}
+                        priceSales={data.priceSales}
+                        pubDate={data.pubDate}
+                        publisher={data.publisher}
+                        isbn={data.isbn}
+                      />
+                    ))}
+                  </Slider>
+                </Box>
               </TabPanel>
             </TabPanels>
           </Tabs>
         </VStack>
 
         {/* 블로거 베스트셀러 */}
-        <VStack alignItems={"flex-start"} spacing={6}>
+        <VStack spacing={6} w="6xl" alignItems="flex-start">
           <Text fontSize={20} fontWeight={600} color={textColor}>
             블로거 베스트셀러
           </Text>
 
-          <Grid
-            height="300px"
-            overflow={"hidden"}
-            templateColumns={{
-              sm: "repeat(2, 1fr)",
-              md: "repeat(4, 1fr)",
-              lg: "repeat(5, 1fr)",
-              xl: "repeat(6, 1fr)",
-              "2xl": "repeat(7, 1fr)",
-            }}
-            gap={4}
-          >
+          <Box w="full" height="300px">
             {isLoadingBlogBest ? <BookSkeleton /> : null}
-            {dataBlogBest?.map((data, index) => (
-              <Book
-                key={index}
-                cover={data.cover}
-                title={data.title}
-                priceSales={data.priceSales}
-                pubDate={data.pubDate}
-                publisher={data.publisher}
-                isbn={data.isbn}
-                fontColor={textColor}
-              />
-            ))}
-          </Grid>
+            <Slider {...settingsBestSeller}>
+              {dataBlogBest?.map((data, index) => (
+                <Book
+                  key={index}
+                  description={data.description}
+                  cover={data.cover}
+                  title={data.title}
+                  priceSales={data.priceSales}
+                  pubDate={data.pubDate}
+                  publisher={data.publisher}
+                  isbn={data.isbn}
+                  fontColor={textColor}
+                />
+              ))}
+            </Slider>
+          </Box>
         </VStack>
 
         {/* 구글 Blogger 연동 */}
@@ -356,32 +388,23 @@ export default function Home() {
           <Text fontSize={20} fontWeight={600}>
             신간 전체 리스트
           </Text>
-          <Grid
-            height="300px"
-            overflow={"hidden"}
-            templateColumns={{
-              sm: "repeat(2, 1fr)",
-              md: "repeat(4, 1fr)",
-              lg: "repeat(5, 1fr)",
-              xl: "repeat(6, 1fr)",
-              "2xl": "repeat(7, 1fr)",
-            }}
-            gap={4}
-            gridAutoFlow="row dense"
-          >
+          <Box w="6xl">
             {isLoadingItemNewAll ? <BookSkeleton /> : null}
-            {dataItemNewAll?.map((data, index) => (
-              <Book
-                key={index}
-                cover={data.cover}
-                title={data.title}
-                priceSales={data.priceSales}
-                pubDate={data.pubDate}
-                publisher={data.publisher}
-                isbn={data.isbn}
-              />
-            ))}
-          </Grid>
+            <Slider {...settingsBestSeller}>
+              {dataItemNewAll?.map((data, index) => (
+                <Book
+                  key={index}
+                  description={data.description}
+                  cover={data.cover}
+                  title={data.title}
+                  priceSales={data.priceSales}
+                  pubDate={data.pubDate}
+                  publisher={data.publisher}
+                  isbn={data.isbn}
+                />
+              ))}
+            </Slider>
+          </Box>
         </VStack>
 
         {/* 주목할 만한 신간 리스트 */}
@@ -389,32 +412,24 @@ export default function Home() {
           <Text color={textColor} fontSize={20} fontWeight={600}>
             주목할 만한 신간 리스트
           </Text>
-          <Grid
-            height="300px"
-            overflow={"hidden"}
-            templateColumns={{
-              sm: "repeat(2, 1fr)",
-              md: "repeat(4, 1fr)",
-              lg: "repeat(5, 1fr)",
-              xl: "repeat(6, 1fr)",
-              "2xl": "repeat(7, 1fr)",
-            }}
-            gap={4}
-          >
+          <Box w="6xl">
             {isLoadingItemNewSpecial ? <BookSkeleton /> : null}
-            {dataItemNewSpecial?.map((data, index) => (
-              <Book
-                key={index}
-                cover={data.cover}
-                title={data.title}
-                priceSales={data.priceSales}
-                pubDate={data.pubDate}
-                publisher={data.publisher}
-                isbn={data.isbn}
-                fontColor={textColor}
-              />
-            ))}
-          </Grid>
+            <Slider {...settingsBestSeller}>
+              {dataItemNewSpecial?.map((data, index) => (
+                <Book
+                  key={index}
+                  description={data.description}
+                  cover={data.cover}
+                  title={data.title}
+                  priceSales={data.priceSales}
+                  pubDate={data.pubDate}
+                  publisher={data.publisher}
+                  isbn={data.isbn}
+                  fontColor={textColor}
+                />
+              ))}
+            </Slider>
+          </Box>
         </VStack>
 
         {/* 중고매장 위치 */}

@@ -15,13 +15,12 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { bookDetail } from "../api";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { bookDetail, toggleFavs } from "../api";
 import { useParams } from "react-router-dom";
 import { dateFormat, deductFormat, priceFormat } from "../lib/utils";
 import { BsFillBasketFill } from "react-icons/bs";
 import { AiFillCreditCard, AiFillStar } from "react-icons/ai";
-import { GiPresent } from "react-icons/gi";
 import { FiPocket } from "react-icons/fi";
 import BookSkeletonDetail from "../components/BookSkeletonDetail";
 
@@ -65,11 +64,18 @@ export default function BookDetail() {
     bookDetail
   );
 
+  const { mutate } = useMutation(toggleFavs, {
+    onSuccess: (data, variables, context) => {
+      // console.log("data", data);
+      // console.log("variables", variables);
+    },
+  });
+
   return (
     <>
       {isLoading ? <BookSkeletonDetail /> : null}
-      {data?.map((item) => (
-        <>
+      {data?.map((item, index) => (
+        <Box key={index}>
           <VStack
             h="550px"
             backgroundImage={`url(${item.cover})`}
@@ -236,19 +242,23 @@ export default function BookDetail() {
                         >
                           바로구매
                         </Button>
-                        <Button
-                          leftIcon={<GiPresent />}
-                          colorScheme="white"
-                          variant="outline"
-                        >
-                          선물하기
-                        </Button>
+
                         <Button
                           leftIcon={<FiPocket />}
                           colorScheme="white"
                           variant="outline"
+                          onClick={() =>
+                            mutate({
+                              isbn: item.isbn,
+                              title: item.title,
+                              description: item.description,
+                              cover: item.cover,
+                              pubdate: item.pubDate,
+                              publisher: item.publisher,
+                            })
+                          }
                         >
-                          보관함
+                          찜하기
                         </Button>
                       </HStack>
                     </VStack>
@@ -403,7 +413,7 @@ export default function BookDetail() {
               </Grid>
             </Box>
           </VStack>
-        </>
+        </Box>
       ))}
     </>
   );

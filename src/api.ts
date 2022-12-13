@@ -6,17 +6,31 @@
 // BlogBest : 블로거 베스트셀러 (국내도서만 조회 가능
 
 import { QueryFunctionContext } from "@tanstack/react-query";
-
 import { ILogInForm } from "./components/LoginModal";
 import { ISignUpForm } from "./components/SignUpModal";
+
+interface IProps {
+  title: string;
+  isbn: string;
+  description: string;
+  cover: string;
+  pubdate: string;
+  publisher: string;
+}
 
 const BASE_PATH = "https://api-backend-2022.herokuapp.com";
 // const BASE_PATH = "http://localhost:4000";
 
-export async function refreshTokens() {
-  return await fetch(`${BASE_PATH}/users/test`).then((response) =>
-    response.json()
-  );
+// export async function refreshTokens() {
+//   return await fetch(`${BASE_PATH}/users/test`).then((response) =>
+//     response.json()
+//   );
+// }
+
+export async function getMe() {
+  return await fetch(`${BASE_PATH}/users/me`, {
+    credentials: "include",
+  }).then((response) => response.json());
 }
 
 export async function blogList() {
@@ -24,6 +38,7 @@ export async function blogList() {
     response.json()
   );
 }
+
 export async function blogDetail(id: any) {
   const postId = id.queryKey[1];
 
@@ -80,9 +95,11 @@ export async function bookDetail(ctx: QueryFunctionContext) {
   );
 }
 
-export async function inBound() {
-  return await fetch(`${BASE_PATH}/api/v1/inbound`).then((response) =>
-    response.json()
+export async function inBound(pageParam: any) {
+  console.log(pageParam);
+  // const pageParam = ctx.queryKey[1];
+  return await fetch(`${BASE_PATH}/api/v1/inbound?page=${pageParam}`).then(
+    (response) => response.json()
   );
 }
 
@@ -118,6 +135,31 @@ export async function search(term: any) {
   ).then((response) => response.json());
 }
 
+export async function toggleFavs({
+  title,
+  isbn,
+  description,
+  cover,
+  pubdate,
+  publisher,
+}: IProps) {
+  console.log("프론트", title, isbn, cover);
+  return await fetch(`${BASE_PATH}/users/toggleFav`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title,
+      isbn,
+      description,
+      cover,
+      pubdate,
+      publisher,
+    }),
+  }).then((response) => response.json);
+}
+
 export async function usernameSignUp({
   username,
   email,
@@ -150,11 +192,22 @@ export async function usernameSignUp({
 // }
 
 export async function usernameLogIn({ username, password }: ILogInForm) {
+  // console.log("api", username, password);
   return await fetch(`${BASE_PATH}/users/login`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
     body: JSON.stringify({
       username,
       password,
     }),
   }).then((response) => response.json);
+}
+
+export function logOut() {
+  console.log("로그아웃 버튼");
+
+  return fetch(`${BASE_PATH}/users/logout`).then((response) => response.json);
 }
