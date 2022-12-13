@@ -31,7 +31,7 @@ import useUser from "../lib/useUser";
 import { logOut } from "../api";
 
 export default function Header() {
-  const [scroll, setScroll] = useState(false);
+  const [scroll, setScroll] = useState(true);
   const { userLoading, user } = useUser();
 
   // const [scrollY, setScrollY] = useState(0);
@@ -81,8 +81,9 @@ export default function Header() {
 
   return (
     <Stack
-      transform={scroll ? "translateY(0px)" : "translateY(-60px)"}
+      transform={scroll ? "translateY(-60px)" : "translateY(-120px)"}
       transition="0.4s"
+      zIndex={999}
       w="100%"
       h="60px"
       color="#0d243f"
@@ -90,10 +91,9 @@ export default function Header() {
       fontSize={"sm"}
       alignItems={"center"}
       justifyContent={"center"}
-      backgroundColor={headerColor}
       boxShadow="sm"
+      backgroundColor={headerColor}
       position="fixed"
-      zIndex={99}
     >
       {isMobile ? (
         // 모바일 일때 화면 구현

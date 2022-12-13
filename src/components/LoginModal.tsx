@@ -76,6 +76,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 }
               />
               <Input
+                type="password"
                 isInvalid={Boolean(errors.password?.message)}
                 {...register("password", {
                   required: "비밀번호를 입력해 주세요!",

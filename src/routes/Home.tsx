@@ -161,7 +161,7 @@ export default function Home() {
   };
 
   return (
-    <VStack spacing={10} mb={16}>
+    <VStack spacing={10} my={"60px"}>
       <VStack
         position={"relative"}
         h="350px"
@@ -312,7 +312,7 @@ export default function Home() {
         <VStack w="full">
           <SkewBox
             title="블로거 베스트셀러"
-            description="인터넷에서 판매되는 상품중 블로거 추천이 가장 많이 된 순위입니다."
+            description="판매되는 상품중 블로거 추천이 가장 많이 된 순위입니다."
             imgUrl="https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
           />
         </VStack>
@@ -356,7 +356,7 @@ export default function Home() {
         <VStack w="full">
           <SkewBox
             title="신간 전체 리스트"
-            description="“이 주에 새롭게 등록된 신상품 중 MD가 추천하는 리스트입니다."
+            description="이 주에 새롭게 등록된 신상품 중 MD가 추천하는 리스트입니다."
             imgUrl="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
           />
         </VStack>

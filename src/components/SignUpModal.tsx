@@ -86,6 +86,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                 }
               />
               <Input
+                type="password"
                 variant={"filled"}
                 placeholder="비밀번호"
                 {...register("password")}
@@ -96,6 +97,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                 children={<Box color={"gray.400"}>{null}</Box>}
               />
               <Input
+                type="password"
                 variant={"filled"}
                 placeholder="비밀번호 확인"
                 {...register("password2")}
