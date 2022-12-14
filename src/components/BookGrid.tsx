@@ -6,6 +6,7 @@ import {
   Image,
   Select,
   Text,
+  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
@@ -23,6 +24,7 @@ interface IProps {
 }
 
 export default function BookGrid({ wSize }: IProps) {
+  const backColor = useColorModeValue("white", "gray.800");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
   const total = 500; // 임시 하드코딩
@@ -58,7 +60,7 @@ export default function BookGrid({ wSize }: IProps) {
               textTransform={"uppercase"}
               fontSize={24}
               fontWeight="600"
-              bg="white"
+              bg={backColor}
             >
               주목할 만한 신간리스트
             </Text>

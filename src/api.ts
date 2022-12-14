@@ -27,12 +27,6 @@ const BASE_PATH = "http://localhost:4000";
 //   );
 // }
 
-export async function getMe() {
-  return await fetch(`${BASE_PATH}/users/me`, {
-    credentials: "include",
-  }).then((response) => response.json());
-}
-
 export async function blogList() {
   return await fetch(`${BASE_PATH}/api/v1/blogList`).then((response) =>
     response.json()
@@ -205,8 +199,16 @@ export async function usernameLogIn({ username, password }: ILogInForm) {
   }).then((response) => response.json);
 }
 
-export function logOut() {
-  console.log("로그아웃 버튼");
+export async function logOut() {
+  console.log("프론트 로그아웃 버튼");
 
-  return fetch(`${BASE_PATH}/users/logout`).then((response) => response.json);
+  return await fetch(`${BASE_PATH}/users/logout`).then(
+    (response) => response.json
+  );
+}
+
+export async function getMe() {
+  return await fetch(`${BASE_PATH}/users/me`, {
+    credentials: "include",
+  }).then((response) => response.json());
 }

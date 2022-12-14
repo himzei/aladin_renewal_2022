@@ -27,13 +27,11 @@ import Logo from "./Logo";
 import { useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { motion } from "framer-motion";
-import useUser from "../lib/useUser";
 import { getMe, logOut } from "../api";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Header() {
   const [scroll, setScroll] = useState(true);
-  const { user } = useUser();
 
   useEffect(() => {
     document.addEventListener("wheel", (event) => {
@@ -45,8 +43,11 @@ export default function Header() {
     });
   });
 
-  const { isLoading, data } = useQuery(["me"], getMe);
-  console.log(isLoading, data);
+  const { data, refetch } = useQuery(["me"], getMe);
+
+  useEffect(() => {
+    refetch();
+  });
 
   // console.log(data);
 
@@ -152,7 +153,7 @@ export default function Header() {
                   </>
                 ) : (
                   <>
-                    <MenuItem>{user.username} 님</MenuItem>
+                    <MenuItem>{data?.user.username} 님</MenuItem>
                     <MenuItem onClick={logOut}>로그아웃</MenuItem>
                   </>
                 )}
@@ -249,7 +250,9 @@ export default function Header() {
                   <Avatar w={10} h={10} />
                   <Text>{data.user.username} 님 반가워요</Text>
 
-                  <Text fontSize="sm">로그아웃</Text>
+                  <Text fontSize="sm" cursor={"pointer"} onClick={logOut}>
+                    로그아웃
+                  </Text>
                 </HStack>
               </>
             )}

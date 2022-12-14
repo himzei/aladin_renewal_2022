@@ -11,6 +11,8 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { FaUser, FaLock } from "react-icons/fa";
@@ -27,6 +29,7 @@ export interface ILogInForm {
   password: string;
 }
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+  const toast = useToast();
   const {
     reset,
     register,
@@ -34,7 +37,14 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     formState: { errors },
   } = useForm<ILogInForm>();
   const mutation = useMutation(usernameLogIn, {
+    onError: (err, context) => {
+      console.log(err, context);
+    },
     onSuccess: () => {
+      toast({
+        title: "환영합니다!",
+        status: "success",
+      });
       onClose();
       reset();
     },
@@ -66,6 +76,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 variant={"filled"}
                 placeholder="아이디"
               />
+              {errors ? "aaaa" : ""}
             </InputGroup>
             <InputGroup>
               <InputLeftElement
@@ -86,6 +97,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               />
             </InputGroup>
           </VStack>
+          {mutation.isError ? (
+            <Text color="red.500" fontSize={"sm"} textAlign="center">
+              아이디/패스워드가 틀립니다!
+            </Text>
+          ) : null}
           <Button type="submit" mt={4} w="100%" colorScheme={"blue"}>
             로그인
           </Button>

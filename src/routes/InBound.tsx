@@ -82,7 +82,7 @@ export default function InBound() {
 
   return (
     <>
-      <VStack spacing={10} py={"60px"}>
+      <VStack spacing={10}>
         <VStack w="7xl">
           <VStack
             h="300px"

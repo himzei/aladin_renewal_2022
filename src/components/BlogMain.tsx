@@ -1,4 +1,11 @@
-import { Box, GridItem, Image, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  GridItem,
+  Image,
+  Text,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { dateFormat } from "../lib/utils";
 
@@ -10,6 +17,7 @@ interface IProp {
 }
 
 export default function BlogMain({ title, content, published, id }: IProp) {
+  const backColor = useColorModeValue("white", "gray.800");
   return (
     <Link to={`/blog/${id}`}>
       <GridItem maxWidth={"260px"} role="group">
@@ -25,7 +33,14 @@ export default function BlogMain({ title, content, published, id }: IProp) {
               src={`https://picsum.photos/seed/${title}/300/300`}
             />
           </Box>
-          <VStack h="180px" p={4} spacing={4} alignItems="flex-start">
+          <VStack
+            as={Box}
+            h="180px"
+            p={4}
+            spacing={4}
+            alignItems="flex-start"
+            bg={backColor}
+          >
             <VStack alignItems="flex-start" spacing={0}>
               <Text
                 fontWeight={700}

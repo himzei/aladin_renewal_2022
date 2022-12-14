@@ -93,6 +93,7 @@ const DivPre = styled.div`
 
 export default function Home() {
   const textColor = useColorModeValue("gray.700", "white");
+  const backColor = useColorModeValue("white", "gray.800");
   const gradientColor = useColorModeValue(
     "linear(to-r, #0093e9 0%, #192699 99%)",
     "linear(to-r, #060606, #404040 )"
@@ -233,7 +234,7 @@ export default function Home() {
                 textTransform={"uppercase"}
                 fontSize={24}
                 fontWeight="600"
-                bg="white"
+                bg={backColor}
               >
                 베스트셀러
               </Text>
@@ -327,7 +328,7 @@ export default function Home() {
             w="6xl"
             position="absolute"
             top={-40}
-            bg="white"
+            bg={backColor}
             py={8}
             px={2}
             alignItems="center"
@@ -371,7 +372,7 @@ export default function Home() {
             w="6xl"
             position="absolute"
             top={-40}
-            bg="white"
+            bg={backColor}
             py={8}
             px={2}
             alignItems="center"
@@ -410,7 +411,7 @@ export default function Home() {
             h="full"
             left={0}
             top={0}
-            bg="white"
+            bg={backColor}
             opacity={0.7}
           />
           <Grid templateColumns={"2fr 5fr"} w="6xl" zIndex={2} gap={12}>
