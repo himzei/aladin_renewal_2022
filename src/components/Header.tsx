@@ -44,6 +44,7 @@ export default function Header() {
   });
 
   const { data, refetch } = useQuery(["me"], getMe);
+  console.log(data);
 
   useEffect(() => {
     refetch();
@@ -153,7 +154,7 @@ export default function Header() {
                   </>
                 ) : (
                   <>
-                    <MenuItem>{data?.user.username} 님</MenuItem>
+                    <MenuItem> {data?.user.username}님</MenuItem>
                     <MenuItem onClick={logOut}>로그아웃</MenuItem>
                   </>
                 )}
@@ -248,7 +249,7 @@ export default function Header() {
               <>
                 <HStack spacing={4}>
                   <Avatar w={10} h={10} />
-                  <Text>{data.user.username} 님 반가워요</Text>
+                  <Text>{data?.user.username} 님 반가워요</Text>
 
                   <Text fontSize="sm" cursor={"pointer"} onClick={logOut}>
                     로그아웃

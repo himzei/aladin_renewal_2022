@@ -14,6 +14,7 @@ import {
   GridItem,
   HStack,
   Text,
+  useColorModeValue,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
@@ -24,6 +25,7 @@ const MapContainer = styled.div`
   /* aspect-ratio: 16 / 9; */
   width: 100%;
   height: 100%;
+  color: tomato;
 `;
 
 interface IInfo {
@@ -447,6 +449,8 @@ const addressData: IInfo[] = [
 ];
 
 export default function LocationMap() {
+  const backColor = useColorModeValue("gray.100", "gray.700");
+  const backColor2 = useColorModeValue("gray.50", "gray.600");
   const newArr = addressData.map((i) => i.city);
   const cityArr = Array.from(new Set(newArr));
 
@@ -543,7 +547,7 @@ export default function LocationMap() {
           <VStack
             zIndex={3}
             spacing={8}
-            bg="gray.100"
+            bg={backColor}
             w="240px"
             h="full"
             display={"flex"}
@@ -584,7 +588,7 @@ export default function LocationMap() {
             w="210px"
             h="full"
             zIndex={2}
-            bg="gray.50"
+            bg={backColor2}
             overflow={"auto"}
           >
             <Box

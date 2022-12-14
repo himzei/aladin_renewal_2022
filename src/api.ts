@@ -192,6 +192,7 @@ export async function usernameLogIn({ username, password }: ILogInForm) {
       "Content-Type": "application/json",
     },
     credentials: "include",
+
     body: JSON.stringify({
       username,
       password,
@@ -202,9 +203,13 @@ export async function usernameLogIn({ username, password }: ILogInForm) {
 export async function logOut() {
   console.log("프론트 로그아웃 버튼");
 
-  return await fetch(`${BASE_PATH}/users/logout`).then(
-    (response) => response.json
-  );
+  return await fetch(`${BASE_PATH}/users/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  }).then((response) => response.json);
 }
 
 export async function getMe() {
