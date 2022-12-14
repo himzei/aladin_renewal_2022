@@ -107,8 +107,6 @@ export default function Home() {
     IBookResult[]
   >(["books", "Bestseller"], bestSeller);
 
-  console.log(dataBestSeller);
-
   const { data: dataBestSellerMonth, isLoading: isLoadingBestSellerMonth } =
     useQuery<IBookResult[]>(["books", "BestsellerMonth"], bestSellerMonth);
 
@@ -161,7 +159,7 @@ export default function Home() {
   };
 
   return (
-    <VStack spacing={10} my={"60px"}>
+    <VStack spacing={10}>
       <VStack
         position={"relative"}
         h="350px"

@@ -72,7 +72,7 @@ export async function itemNewAll() {
 
 export async function itemNewSpecial(params: any) {
   const [page, limit] = params.queryKey;
-  console.log(page, limit);
+
   return await fetch(
     `${BASE_PATH}/api/v1/itemNewSpecial?page=${page}&limit=${limit}`
   ).then((response) => response.json());
@@ -98,7 +98,6 @@ export async function bookDetail(ctx: QueryFunctionContext) {
 }
 
 export async function inBound(pageParam: any) {
-  console.log(pageParam);
   // const pageParam = ctx.queryKey[1];
   return await fetch(`${BASE_PATH}/api/v1/inbound?page=${pageParam}`).then(
     (response) => response.json()
@@ -145,7 +144,6 @@ export async function toggleFavs({
   pubdate,
   publisher,
 }: IProps) {
-  console.log("프론트", title, isbn, cover);
   return await fetch(`${BASE_PATH}/users/toggleFav`, {
     method: "POST",
     headers: {
@@ -194,7 +192,6 @@ export async function usernameSignUp({
 // }
 
 export async function usernameLogIn({ username, password }: ILogInForm) {
-  // console.log("api", username, password);
   return await fetch(`${BASE_PATH}/users/login`, {
     method: "POST",
     headers: {

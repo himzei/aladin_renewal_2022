@@ -51,8 +51,6 @@ export default function InBound() {
       },
     });
 
-  console.log(data);
-
   useEffect(() => {
     let fetching = false;
 
@@ -69,7 +67,6 @@ export default function InBound() {
 
       if (!fetching && scrollHeight - scrollTop <= clientHeight * 2) {
         fetching = true;
-        console.log(hasNextPage);
 
         if (hasNextPage) await fetchNextPage();
 
@@ -85,7 +82,7 @@ export default function InBound() {
 
   return (
     <>
-      <VStack spacing={10}>
+      <VStack spacing={10} py={"60px"}>
         <VStack w="7xl">
           <VStack
             h="300px"
